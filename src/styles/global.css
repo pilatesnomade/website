@@ -1,0 +1,112 @@
+@font-face {
+  font-family: Outfit;
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/Outfit-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: Nourd;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/nourd_regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: Nourd;
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/fonts/nourd_light.woff2") format("woff2");
+}
+@font-face {
+  font-family: Nourd;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/nourd_bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: Breathing;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Breathing.woff2") format("woff2");
+}
+
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "daisyui";
+
+@theme {
+  --font-heading: "Outfit", sans-serif;
+  --font-sans: "Nourd", sans-serif;
+
+  --color-corail: #ffa187;
+  --color-marron: #66301a;
+  --color-jaune: #ffd88a;
+  --color-atoll: #0c6277;
+  --color-lavande: #a972df;
+  --color-pastel: #f8e7ff;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading text-atoll;
+  }
+
+  .breathing {
+    font-family: "Breathing";
+  }
+
+  body {
+    @apply bg-white text-marron;
+  }
+
+  .corail {
+    color: #ffa187;
+  }
+  .marron {
+    color: #66301a;
+  }
+  .jaune {
+    color: #ffd88a;
+  }
+  .atoll {
+    color: #0c6277;
+  }
+  .lavande {
+    color: #a972df;
+  }
+  .pastel {
+    color: #f8e7ff;
+  }
+}
+
+@utility prose-pilates {
+  --tw-prose-body: var(--color-marron);
+  --tw-prose-headings: var(--color-atoll);
+  --tw-prose-links: var(--color-lavande);
+  --tw-prose-bold: var(--color-marron);
+  --tw-prose-counters: var(--color-marron);
+  --tw-prose-bullets: var(--color-marron);
+  --tw-prose-hr: var(--color-marron);
+  --tw-prose-quotes: var(--color-atoll);
+  --tw-prose-quote-borders: var(--color-atoll);
+  --tw-prose-captions: var(--color-lavande);
+  --tw-prose-invert-body: var(--color-white);
+  --tw-prose-invert-headings: var(--color-white);
+  --tw-prose-invert-links: var(--color-white);
+  --tw-prose-invert-bold: var(--color-white);
+  --tw-prose-invert-counters: var(--color-white);
+  --tw-prose-invert-bullets: var(--color-white);
+  --tw-prose-invert-hr: var(--color-white);
+  --tw-prose-invert-quotes: var(--color-jaune);
+  --tw-prose-invert-quote-borders: var(--color-jaune);
+  --tw-prose-invert-captions: var(--color-pastel);
+}

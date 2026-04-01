@@ -1,17 +1,27 @@
 ---
+import Layout from "../layouts/layout.astro"
+import TextImage from "../components/storyblok/TextImage.astro"
+import Hero from "../components/storyblok/Hero.astro"
+import BigText from "../components/storyblok/BigText.astro"
+import CardsChoices from "../components/storyblok/CardsChoices.astro"
+import Testimonials from "../components/storyblok/Testimonials.astro"
 
+const year = new Date().getFullYear()
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout desc="pilates nomade page accueil" titre="titre accueil">
+  <Hero />
+  <TextImage />
+  <BigText texture="1" sticker="arc" position="right" />
+  <BigText texture="2" sticker="star" position="left" />
+  <BigText texture="3" sticker="semiround" />
+  <BigText texture="4" sticker="mandala" position="right" />
+  <CardsChoices />
+  <Testimonials />
+
+  <footer>
+    <p>
+      &copy; {year} Pilates Nomade. Tout droits réservés.
+    </p>
+  </footer>
+</Layout>
