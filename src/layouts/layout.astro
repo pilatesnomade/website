@@ -15,7 +15,7 @@ const { desc, titre = "mon titre au cas où" } = Astro.props
     <meta name="description" content={desc} />
     <title>{titre}</title>
   </head>
-  <body>
+  <body class="overflow-x-hidden">
     <Navigation />
     <slot />
   </body>

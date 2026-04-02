@@ -5,6 +5,8 @@ import Hero from "../components/storyblok/Hero.astro"
 import BigText from "../components/storyblok/BigText.astro"
 import CardsChoices from "../components/storyblok/CardsChoices.astro"
 import Testimonials from "../components/storyblok/Testimonials.astro"
+import Marquee from "../components/storyblok/Marquee.astro"
+import Timeline from "../components/storyblok/Timeline.astro"
 
 const year = new Date().getFullYear()
 ---
@@ -12,12 +14,14 @@ const year = new Date().getFullYear()
 <Layout desc="pilates nomade page accueil" titre="titre accueil">
   <Hero />
   <TextImage />
-  <BigText texture="1" sticker="arc" position="right" />
+  <BigText texture="1" sticker="semiround" position="right" />
   <BigText texture="2" sticker="star" position="left" />
-  <BigText texture="3" sticker="semiround" />
+  <BigText texture="3" sticker="arc" />
   <BigText texture="4" sticker="mandala" position="right" />
   <CardsChoices />
   <Testimonials />
+  <Marquee />
+  <Timeline />
 
   <footer>
     <p>
