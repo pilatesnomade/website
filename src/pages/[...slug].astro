@@ -1,0 +1,80 @@
+---
+import { useStoryblokApi } from "@storyblok/astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import Layout from "../layouts/Layout.astro";
+
+const storyblokApi = useStoryblokApi();
+const { slug } = Astro.params;
+const isPreview = import.meta.env.IS_PREVIEW === true || import.meta.env.IS_PREVIEW === "true";
+
+// For SSG: Generate static paths for all stories
+export async function getStaticPaths() {
+  const sbApi = useStoryblokApi();
+
+  // Use 'draft' version in preview mode, 'published' otherwise
+  const isPreview = import.meta.env.IS_PREVIEW === true || import.meta.env.IS_PREVIEW === "true";
+  const version = isPreview ? "draft" : "published";
+
+  const { data } = await sbApi.get("cdn/stories", {
+    version,
+    token: import.meta.env.STORYBLOK_TOKEN,
+    per_page: 100
+  });
+
+  // Remove global story global (for configuration purposes only)
+  let filteredStories = data.stories.filter((story) => story.full_slug !== "global");
+
+  return filteredStories.map((story) => ({
+    params: {
+      slug: story.full_slug === "home" || story.full_slug === "" ? undefined : story.full_slug
+    },
+    props: { story }
+  }));
+}
+
+let story;
+
+if (isPreview) {
+  // SSR mode: fetch on-demand for Storyblok visual editor
+  const storySlug = slug || "home";
+  try {
+    const { data } = await storyblokApi.get(`cdn/stories/${storySlug}`, {
+      version: "draft",
+      token: import.meta.env.STORYBLOK_TOKEN,
+      resolve_links: "url"
+    });
+    story = data.story;
+  } catch (error) {
+    console.error("[DEBUG] Storyblok API error:", error.message);
+  }
+} else {
+  // SSG mode: story comes from getStaticPaths props
+  story = Astro.props.story;
+}
+// Guard: If story is undefined (e.g., static assets routed through), return 404
+if (!story) {
+  return new Response(null, {
+    status: 404,
+    statusText: "Not found"
+  });
+}
+
+const seo = {
+  title: story ? story.content?.title : "Page non trouvée",
+  description: story ? story.content.description : "Page non trouvée",
+  robots: story ? story.content.robots : "all",
+  schema: story ? story.content.schema : null,
+  ogImage: story && story.content.ogImage ? story.content.ogImage.filename : null,
+  ogImageAlt:
+    story && story.content.ogImageAlt
+      ? story.content.ogImageAlt
+      : story.content.ogImage?.alt
+        ? story.content.ogImage?.alt
+        : " ",
+  canonical: story ? story.content.canonical?.url : null
+};
+---
+
+<Layout seo={seo}>
+  <StoryblokComponent blok={story.content} />
+</Layout>

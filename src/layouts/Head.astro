@@ -1,0 +1,51 @@
+---
+import Analytics from "@vercel/analytics/astro";
+
+const { seo } = Astro.props;
+
+// Guard against undefined seo
+const safeSeo = seo || {
+  title: "",
+  description: "",
+  robots: "all",
+  schema: null,
+  ogImage: null,
+  ogImageAlt: "",
+  canonical: null
+};
+---
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  {safeSeo.title && <title>{safeSeo.title}</title>}
+
+  {safeSeo.themeColor && <meta name="theme-color" content={safeSeo.themeColor} />}
+
+  <meta name="generator" content={Astro.generator} />
+
+  {safeSeo.canonical && <link rel="canonical" href={Astro.url.href + safeSeo.canonical} />}
+  {!safeSeo.canonical && <link rel="canonical" href={Astro.url.href} />}
+
+  {safeSeo.description && <meta name="description" content={safeSeo.description} />}
+
+  {safeSeo.robots && <meta name="robots" content={safeSeo.robots} />}
+
+  {safeSeo.title && <meta property="og:title" content={safeSeo.title} />}
+  <meta property="og:type" content="website" />
+  {safeSeo.ogImage && <meta property="og:image" content={safeSeo.ogImage} />}
+  <meta property="og:url" content={Astro.url.href} />
+
+  {safeSeo.description && <meta property="og:description" content={safeSeo.description} />}
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:site_name" content="huitquatre" />
+  {safeSeo.ogImageAlt && <meta property="og:image:alt" content={safeSeo.ogImageAlt} />}
+
+  <meta name="twitter:dnt" content="on" />
+
+  {safeSeo.schema && <script type="application/ld+json" set:html={safeSeo.schema} />}
+
+  <slot />
+  <Analytics />
+</head>

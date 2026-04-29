@@ -51,6 +51,8 @@
 </nav>
 
 <style>
+  @reference "../styles/global.css";
+
   .navigation {
     z-index: 500;
     pointer-events: none;
@@ -76,8 +78,7 @@
   .hamburger-nav {
     border-radius: 1.5em;
     position: absolute;
-    top: 2em;
-    right: 2em;
+    @apply top-4 right-4 lg:top-8 lg:right-8;
   }
 
   .hamburger-nav__bg {
@@ -105,7 +106,7 @@
     pointer-events: auto;
     transform-origin: 100% 0;
     flex-flow: column;
-    padding: 2.25em 2.5em 2em 2em;
+    @apply px-5 py-4 lg:px-9 lg:py-8;
     display: flex;
     position: relative;
     transform: scale(0.15) rotate(0.001deg);
@@ -207,7 +208,7 @@
   }
 
   [data-navigation-status="active"] .hamburger-nav__toggle {
-    transform: translate(-1em, 1em) rotate(0.001deg);
+    transform: rotate(0.001deg);
   }
 
   .hamburger-nav__toggle-bar {
@@ -223,9 +224,7 @@
     transform: translateY(0.15em) rotate(0.001deg);
   }
 
-  [data-navigation-status="active"]
-    .hamburger-nav__toggle
-    .hamburger-nav__toggle-bar {
+  [data-navigation-status="active"] .hamburger-nav__toggle .hamburger-nav__toggle-bar {
     transform: translateY(0em) rotate(45deg);
   }
 
@@ -238,9 +237,7 @@
     transform: translateY(-0.15em) rotate(0.001deg);
   }
 
-  [data-navigation-status="active"]
-    .hamburger-nav__toggle
-    .hamburger-nav__toggle-bar:nth-child(2) {
+  [data-navigation-status="active"] .hamburger-nav__toggle .hamburger-nav__toggle-bar:nth-child(2) {
     transform: translateY(0em) rotate(-45deg);
   }
 </style>
@@ -248,51 +245,45 @@
 <script>
   function initScalingHamburgerNavigation() {
     // Toggle Navigation
-    document
-      .querySelectorAll('[data-navigation-toggle="toggle"]')
-      .forEach((toggleBtn) => {
-        toggleBtn.addEventListener("click", () => {
-          const navStatusEl = document.querySelector("[data-navigation-status]")
-          if (!navStatusEl) return
-          if (
-            navStatusEl.getAttribute("data-navigation-status") === "not-active"
-          ) {
-            navStatusEl.setAttribute("data-navigation-status", "active")
-            // If you use Lenis you can 'stop' Lenis here: Example Lenis.stop();
-          } else {
-            navStatusEl.setAttribute("data-navigation-status", "not-active")
-            // If you use Lenis you can 'start' Lenis here: Example Lenis.start();
-          }
-        })
-      })
+    document.querySelectorAll('[data-navigation-toggle="toggle"]').forEach((toggleBtn) => {
+      toggleBtn.addEventListener("click", () => {
+        const navStatusEl = document.querySelector("[data-navigation-status]");
+        if (!navStatusEl) return;
+        if (navStatusEl.getAttribute("data-navigation-status") === "not-active") {
+          navStatusEl.setAttribute("data-navigation-status", "active");
+          // If you use Lenis you can 'stop' Lenis here: Example Lenis.stop();
+        } else {
+          navStatusEl.setAttribute("data-navigation-status", "not-active");
+          // If you use Lenis you can 'start' Lenis here: Example Lenis.start();
+        }
+      });
+    });
 
     // Close Navigation
-    document
-      .querySelectorAll('[data-navigation-toggle="close"]')
-      .forEach((closeBtn) => {
-        closeBtn.addEventListener("click", () => {
-          const navStatusEl = document.querySelector("[data-navigation-status]")
-          if (!navStatusEl) return
-          navStatusEl.setAttribute("data-navigation-status", "not-active")
-          // If you use Lenis you can 'start' Lenis here: Example Lenis.start();
-        })
-      })
+    document.querySelectorAll('[data-navigation-toggle="close"]').forEach((closeBtn) => {
+      closeBtn.addEventListener("click", () => {
+        const navStatusEl = document.querySelector("[data-navigation-status]");
+        if (!navStatusEl) return;
+        navStatusEl.setAttribute("data-navigation-status", "not-active");
+        // If you use Lenis you can 'start' Lenis here: Example Lenis.start();
+      });
+    });
 
     // Key ESC - Close Navigation
     document.addEventListener("keydown", (e) => {
       if (e.keyCode === 27) {
-        const navStatusEl = document.querySelector("[data-navigation-status]")
-        if (!navStatusEl) return
+        const navStatusEl = document.querySelector("[data-navigation-status]");
+        if (!navStatusEl) return;
         if (navStatusEl.getAttribute("data-navigation-status") === "active") {
-          navStatusEl.setAttribute("data-navigation-status", "not-active")
+          navStatusEl.setAttribute("data-navigation-status", "not-active");
           // If you use Lenis you can 'start' Lenis here: Example Lenis.start();
         }
       }
-    })
+    });
   }
 
   // Initialize Scaling Hamburger Navigation
   document.addEventListener("DOMContentLoaded", function () {
-    initScalingHamburgerNavigation()
-  })
+    initScalingHamburgerNavigation();
+  });
 </script>

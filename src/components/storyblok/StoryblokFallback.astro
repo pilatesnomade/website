@@ -1,0 +1,11 @@
+---
+interface Props {
+  blok: any
+}
+
+const { blok } = Astro.props
+---
+
+<div {...blok} class="p-4">
+  <p>Fallback component for: {blok.component}</p>
+</div>

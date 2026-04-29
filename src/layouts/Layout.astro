@@ -1,0 +1,58 @@
+---
+import Head from "./Head.astro";
+import SkipLink from "./SkipLink.astro";
+import Navigation from "./Navigation.astro";
+import "../styles/global.css";
+
+interface Props {
+  seo?: object;
+}
+
+const { seo } = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <Head seo={seo} />
+  </head>
+  <body class="bg-base-100 text-base-900 antialiased">
+    <SkipLink />
+    <Navigation />
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <script>
+      import Lenis from "lenis";
+      import { gsap } from "gsap";
+      import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+      // Initialize Lenis
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: "vertical",
+        gestureOrientation: "vertical",
+        smoothWheel: true,
+        wheelMultiplier: 1
+      });
+
+      // Expose Lenis globally for other components
+      (window as any).lenis = lenis;
+
+      // Sync Lenis with ScrollTrigger
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+      gsap.ticker.lagSmoothing(0);
+
+      // Global animation configurations
+      ScrollTrigger.config({
+        ignoreMobileResize: true
+      });
+    </script>
+  </body>
+</html>
