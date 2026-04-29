@@ -22,6 +22,7 @@ export default defineConfig({
     componentsDir: "src/components/storyblok",
     components: {
       page: "Page",
+      textonly: "TextOnly",
     },
     accessToken: import.meta.env.STORYBLOK_TOKEN || "your_token_here",
     enableFallbackComponent: true,

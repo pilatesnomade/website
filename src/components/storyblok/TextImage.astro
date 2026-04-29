@@ -1,25 +1,21 @@
 <section class="text-image">
   <div class="image">
-    <img class="w-full h-full object-cover" src="/images/img1.jpg" />
+    <img class="h-full w-full object-cover" src="/images/img1.jpg" />
   </div>
   <div class="">
-    <div class="content p-8 lg:p-16 prose-pilates lg:prose-xl">
-      <p class="text-6xl breathing mb-4 atoll">Bienvenue</p>
+    <div class="content prose-pilates lg:prose-xl p-8 lg:p-16">
+      <p class="breathing atoll mb-4 text-6xl">Bienvenue</p>
       <p>
-        Je m’appelle Judith Mounal, issue d’un double cursus, dans le domaine
-        sportif et médico-social, je propose aujourd’hui de vous accompagner de
-        façon globale autant sur l’aspect physique, psychique qu’émotionnel.
+        Je m’appelle Judith Mounal, issue d’un double cursus, dans le domaine sportif et
+        médico-social, je propose aujourd’hui de vous accompagner de façon globale autant sur
+        l’aspect physique, psychique qu’émotionnel.
       </p>
+      <p>A l’origine éducatrice spécialisée, je me suis ensuite formée à la méthode Pilates.</p>
       <p>
-        A l’origine éducatrice spécialisée, je me suis ensuite formée à la
-        méthode Pilates.
-      </p>
-      <p>
-        Je lie aujourd’hui l’ensemble de mon parcours professionnel et vous
-        propose des cours de Pilates pour prendre soin de votre corps, apprendre
-        à le mobiliser en sécurité ; et des accompagnements psycho-corporels au
-        cours desquels je vous accompagne avec douceur et bienveillance à la
-        découverte de vous-même.
+        Je lie aujourd’hui l’ensemble de mon parcours professionnel et vous propose des cours de
+        Pilates pour prendre soin de votre corps, apprendre à le mobiliser en sécurité ; et des
+        accompagnements psycho-corporels au cours desquels je vous accompagne avec douceur et
+        bienveillance à la découverte de vous-même.
       </p>
       <p>Je veille à respecter les potentialités et le chemin de chacun.</p>
       <p>J’exerce à Brive la Gaillarde (19) et ses alentours.</p>
@@ -29,18 +25,18 @@
 
 <script>
   function setImageHeight() {
-    const contentHeight = document.querySelector(".content")?.clientHeight
-    const image = document.querySelector(".image")
+    const contentHeight = document.querySelector(".content")?.clientHeight;
+    const image = document.querySelector(".image");
     if (image) {
-      image.style.height = `${contentHeight}px`
+      image.style.height = `${contentHeight}px`;
     }
   }
 
   // Run on initial load
-  setImageHeight()
+  setImageHeight();
 
   // Run on resize
-  window.addEventListener("resize", setImageHeight)
+  window.addEventListener("resize", setImageHeight);
 </script>
 
 <style>

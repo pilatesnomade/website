@@ -1,0 +1,29 @@
+---
+import Stickers from "../helpers/Stickers.astro";
+import { storyblokEditable } from "@storyblok/astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro";
+
+const { blok } = Astro.props;
+---
+
+<section class=`intro texture-${blok.texture} relative pb-18 lg:pb-38` {...storyblokEditable(blok)}>
+  <div class="py-12 lg:py-24">
+    <div class="text-container">
+      <RichTextRenderer
+        content={blok.content}
+        resolver={(blok) => {
+          return {
+            component: StoryblokComponent,
+            props: { blok }
+          };
+        }}
+      />
+    </div>
+  </div>
+  <Stickers
+    variant={blok.sticker}
+    class=`w-32 lg:w-64 h-auto absolute -bottom-6 ${blok.position==="left" ? "left-8" : blok.position==="right" ? "right-8" : "right-1/2 translate-x-1/2"} z-10`
+    `
+  />
+</section>
