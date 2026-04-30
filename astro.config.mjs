@@ -1,20 +1,45 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, passthroughImageService } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import favicons from 'astro-favicons';
 import vercel from '@astrojs/vercel';
 import { storyblok } from "@storyblok/astro";
 import sitemap from '@astrojs/sitemap';
+import { loadEnv } from "vite";
 
-const isPreview = process.env.IS_PREVIEW === true || process.env.IS_PREVIEW === 'true' || import.meta.env.IS_PREVIEW === true || import.meta.env.IS_PREVIEW === 'true';
+
+const env = loadEnv('', process.cwd(), '');
+const isPreview = env.IS_PREVIEW === true || process.env.IS_PREVIEW === true || process.env.IS_PREVIEW === 'true' || import.meta.env.IS_PREVIEW === true || import.meta.env.IS_PREVIEW === 'true';
 
 
 // https://astro.build/config
 export default defineConfig({
   output: isPreview ? "server" : "static",
   adapter: vercel({
-    webAnalytics: { enabled: true }
+    webAnalytics: { enabled: true },
+    imageService: true,
+    imagesConfig: {
+      minimumCacheTTL: 86400,
+      sizes: [300, 720, 1080, 1560, 1920, 2560],
+      remotePatterns: [
+        {
+          protocol: "https",
+          hostname: "a.storyblok.com",
+          pathname: `/f/${env.STORYBLOK_SPACE_ID}/**`,
+        },
+      ],
+    },
   }),
+  image: {
+    service: passthroughImageService(),
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "a.storyblok.com",
+        pathname: `/f/${env.STORYBLOK_SPACE_ID}/**`,
+      },
+    ],
+  },
   vite: {
     plugins: [tailwindcss()]
   },
@@ -24,6 +49,7 @@ export default defineConfig({
       page: "Page",
       textonly: "TextOnly",
       button: "Button",
+      cardsChoices: "CardsChoices",
     },
     accessToken: import.meta.env.STORYBLOK_TOKEN || "your_token_here",
     enableFallbackComponent: true,

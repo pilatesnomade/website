@@ -1,4 +1,11 @@
+---
+import { Image } from "astro:assets";
+import { storyblokEditable } from "@storyblok/astro";
+const { blok } = Astro.props;
+---
+
 <section
+  {...storyblokEditable(blok)}
   data-stacking-cards-init=""
   data-stacking-cards-desktop="true"
   data-stacking-cards-tablet="true"
@@ -7,69 +14,29 @@
   <div class="container">
     <div class="cards-stack__collection">
       <div data-stacking-card-stack="" class="cards-stack__list">
-        <div data-stacking-card="" class="cards-stack__item is--wide">
-          <a
-            href="1"
-            data-stacking-card-target=""
-            class="cards-stack-card is--wide">
-            <div class="cards-stack-card__start">
-              <span class="cards-stack-card__number">Cours présentiel</span>
-            </div>
-            <div class="cards-stack-card__end">
-              <img
-                src="/images/img1.jpg"
-                class="max-h-72 w-full object-cover rounded-xl"
-              />
-            </div>
-          </a>
-        </div>
-        <a href="2" data-stacking-card="" class="cards-stack__item is--wide">
-          <div
-            data-stacking-card-target=""
-            class="cards-stack-card is--wide is--green">
-            <div class="cards-stack-card__start">
-              <span class="cards-stack-card__number">Cours en ligne</span>
-            </div>
-            <div class="cards-stack-card__end">
-              <img
-                src="/images/img1.jpg"
-                class="max-h-72 w-full object-cover rounded-xl"
-              />
-            </div>
-          </div>
-        </a>
-        <a href="3" data-stacking-card="" class="cards-stack__item is--wide">
-          <div
-            data-stacking-card-target=""
-            class="cards-stack-card is--wide is--dark">
-            <div class="cards-stack-card__start">
-              <span class="cards-stack-card__number">
-                Accompagnements psycho-corporels
-              </span>
-            </div>
-            <div class="cards-stack-card__end">
-              <img
-                src="/images/img1.jpg"
-                class="max-h-72 w-full object-cover rounded-xl"
-              />
-            </div>
-          </div>
-        </a>
-        <a href="#" data-stacking-card="" class="cards-stack__item is--wide">
-          <div data-stacking-card-target="" class="cards-stack-card is--wide">
-            <div class="cards-stack-card__start">
-              <span class="cards-stack-card__number">
-                Professionnels et entreprises
-              </span>
-            </div>
-            <div class="cards-stack-card__end">
-              <img
-                src="/images/img1.jpg"
-                class="max-h-72 w-full object-cover rounded-xl"
-              />
-            </div>
-          </div>
-        </a>
+        {
+          blok.cards?.map((card) => (
+            <a
+              href={`/${card.url.story.full_slug === "home" ? "" : card.url.story.full_slug}`}
+              data-stacking-card=""
+              class="cards-stack__item is--wide">
+              <div data-stacking-card-target="" class={`cards-stack-card is--wide ${card.color}`}>
+                <div class="cards-stack-card__start">
+                  <span class="cards-stack-card__number">{card?.title}</span>
+                </div>
+                <div class="cards-stack-card__end">
+                  <Image
+                    src={card.image?.filename}
+                    alt={card.image?.alt}
+                    class="max-h-72 w-full rounded-xl object-cover"
+                    inferSize
+                    layout="constrained"
+                  />
+                </div>
+              </div>
+            </a>
+          ))
+        }
       </div>
     </div>
   </div>
@@ -122,12 +89,34 @@
     display: flex;
   }
 
-  .cards-stack-card.is--green {
-    background-color: var(--color-jaune);
+  .cards-stack-card.corail {
+    background-color: var(--color-corail);
+    color: var(--color-marron);
   }
 
-  .cards-stack-card.is--dark {
-    background-color: var(--color-corail);
+  .cards-stack-card.marron {
+    background-color: var(--color-marron);
+    color: white;
+  }
+
+  .cards-stack-card.jaune {
+    background-color: var(--color-jaune);
+    color: var(--color-marron);
+  }
+
+  .cards-stack-card.atoll {
+    background-color: var(--color-atoll);
+    color: white;
+  }
+
+  .cards-stack-card.lavande {
+    background-color: var(--color-lavande);
+    color: white;
+  }
+
+  .cards-stack-card.pastel {
+    background-color: var(--color-pastel);
+    color: var(--color-marron);
   }
 
   .cards-stack-card.is--wide {
@@ -201,84 +190,74 @@
 </style>
 
 <script>
-  import { gsap } from "gsap"
+  import { gsap } from "gsap";
 
-  import { ScrollTrigger } from "gsap/ScrollTrigger"
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-  gsap.registerPlugin(ScrollTrigger)
+  gsap.registerPlugin(ScrollTrigger);
 
   function initStackingStickyCardsBounce() {
-    const cardsSections = document.querySelectorAll(
-      "[data-stacking-cards-init]"
-    )
+    const cardsSections = document.querySelectorAll("[data-stacking-cards-init]");
 
-    const currentTier = getCurrentViewportTier()
-    window.viewportTier = currentTier
+    const currentTier = getCurrentViewportTier();
+    window.viewportTier = currentTier;
 
     ScrollTrigger.getAll().forEach((trigger) => {
       cardsSections.forEach((section) => {
-        if (section.contains(trigger.trigger)) trigger.kill()
-      })
-    })
+        if (section.contains(trigger.trigger)) trigger.kill();
+      });
+    });
 
     cardsSections.forEach((section) => {
       section.querySelectorAll("[data-stacking-card-target]").forEach((el) => {
-        gsap.killTweensOf(el)
-        gsap.set(el, { clearProps: "all" })
-      })
-    })
+        gsap.killTweensOf(el);
+        gsap.set(el, { clearProps: "all" });
+      });
+    });
 
     cardsSections.forEach((section) => {
-      const tier = currentTier
+      const tier = currentTier;
 
       const isEnabled =
-        (tier === "desktop" &&
-          section.dataset.stackingCardsDesktop === "true") ||
+        (tier === "desktop" && section.dataset.stackingCardsDesktop === "true") ||
         (tier === "tablet" && section.dataset.stackingCardsTablet === "true") ||
         ((tier === "mobile-portrait" || tier === "mobile-landscape") &&
-          section.dataset.stackingCardsMobile === "true")
+          section.dataset.stackingCardsMobile === "true");
 
-      if (!isEnabled) return
+      if (!isEnabled) return;
 
-      const cards = Array.from(section.querySelectorAll("[data-stacking-card]"))
-      if (!cards.length) return
+      const cards = Array.from(section.querySelectorAll("[data-stacking-card]"));
+      if (!cards.length) return;
 
-      const stickyTop = parseFloat(getComputedStyle(cards[0]).top) || 0
+      const stickyTop = parseFloat(getComputedStyle(cards[0]).top) || 0;
 
       const rotateValues = (() => {
         if (tier === "desktop")
-          return parseRotateValues(
-            section,
-            "data-stacking-cards-desktop-rotate"
-          )
+          return parseRotateValues(section, "data-stacking-cards-desktop-rotate");
         if (tier === "tablet")
-          return parseRotateValues(section, "data-stacking-cards-tablet-rotate")
-        return parseRotateValues(section, "data-stacking-cards-mobile-rotate")
-      })()
+          return parseRotateValues(section, "data-stacking-cards-tablet-rotate");
+        return parseRotateValues(section, "data-stacking-cards-mobile-rotate");
+      })();
 
       const xValues = (() => {
-        if (tier === "desktop")
-          return parseAxisValues(section, "data-stacking-cards-desktop-x")
-        if (tier === "tablet")
-          return parseAxisValues(section, "data-stacking-cards-tablet-x")
-        return parseAxisValues(section, "data-stacking-cards-mobile-x")
-      })()
+        if (tier === "desktop") return parseAxisValues(section, "data-stacking-cards-desktop-x");
+        if (tier === "tablet") return parseAxisValues(section, "data-stacking-cards-tablet-x");
+        return parseAxisValues(section, "data-stacking-cards-mobile-x");
+      })();
 
       const yValues = (() => {
-        if (tier === "desktop")
-          return parseAxisValues(section, "data-stacking-cards-desktop-y")
-        if (tier === "tablet")
-          return parseAxisValues(section, "data-stacking-cards-tablet-y")
-        return parseAxisValues(section, "data-stacking-cards-mobile-y")
-      })()
+        if (tier === "desktop") return parseAxisValues(section, "data-stacking-cards-desktop-y");
+        if (tier === "tablet") return parseAxisValues(section, "data-stacking-cards-tablet-y");
+        return parseAxisValues(section, "data-stacking-cards-mobile-y");
+      })();
 
       cards.forEach((card, index) => {
-        const targetEl = card.querySelector("[data-stacking-card-target]")
-        if (!targetEl) return
+        const targetEl = card.querySelector("[data-stacking-card-target]");
+        if (!targetEl) return;
 
-        const rotate = rotateValues[index % rotateValues.length]
-        const x = xValues[index % xValues.length]
-        const y = yValues[index % yValues.length]
+        const rotate = rotateValues[index % rotateValues.length];
+        const x = xValues[index % xValues.length];
+        const y = yValues[index % yValues.length];
 
         gsap.set(targetEl, {
           rotate: 0,
@@ -286,7 +265,7 @@
           y: 0,
           scale: 1,
           zIndex: cards.length - index
-        })
+        });
 
         gsap.to(targetEl, {
           rotate,
@@ -301,92 +280,88 @@
             end: `top-=${stickyTop} top`,
             scrub: true
           }
-        })
+        });
 
         ScrollTrigger.create({
           id: `stacking-bounce-${index}`,
           trigger: card,
           start: `top-=${stickyTop} top`,
           onEnter: () => pulseElement(targetEl)
-        })
-      })
-    })
+        });
+      });
+    });
 
-    ScrollTrigger.refresh()
+    ScrollTrigger.refresh();
 
     function parseRotateValues(section, attr) {
-      const fallback = [0, 4, -4]
+      const fallback = [0, 4, -4];
       const values = (section.getAttribute(attr) || "")
         .split(",")
-        .map((val) => parseFloat(val.trim()))
-      return values.length >= 1 && values.every((v) => !isNaN(v))
-        ? values
-        : fallback
+        .map((val) => parseFloat(val.trim()));
+      return values.length >= 1 && values.every((v) => !isNaN(v)) ? values : fallback;
     }
 
     function parseAxisValues(section, attr) {
-      const raw = section.getAttribute(attr)
-      if (!raw) return ["0em", "0em", "0em"]
+      const raw = section.getAttribute(attr);
+      if (!raw) return ["0em", "0em", "0em"];
       const values = raw
         .split(",")
         .map((val) => val.trim())
-        .filter((val) => val !== "")
-      return values.length ? values : ["0em", "0em", "0em"]
+        .filter((val) => val !== "");
+      return values.length ? values : ["0em", "0em", "0em"];
     }
 
     if (!window._hasStackingResizeListener) {
-      let last = getCurrentViewportTier()
+      let last = getCurrentViewportTier();
 
       window.addEventListener(
         "resize",
         debounceOnWidthChange(() => {
-          const next = getCurrentViewportTier()
+          const next = getCurrentViewportTier();
 
           if (last !== next) {
             ScrollTrigger.getAll().forEach((t) => {
-              if (t.vars?.id?.startsWith("stacking")) t.kill()
-            })
+              if (t.vars?.id?.startsWith("stacking")) t.kill();
+            });
 
             cardsSections.forEach((section) => {
-              section
-                .querySelectorAll("[data-stacking-card-target]")
-                .forEach((el) => {
-                  gsap.killTweensOf(el)
-                  gsap.set(el, { clearProps: "all" })
-                })
-            })
+              section.querySelectorAll("[data-stacking-card-target]").forEach((el) => {
+                gsap.killTweensOf(el);
+                gsap.set(el, { clearProps: "all" });
+              });
+            });
 
-            initStackingStickyCardsBounce()
+            initStackingStickyCardsBounce();
           }
 
-          last = next
-          window.viewportTier = next
+          last = next;
+          window.viewportTier = next;
         }, 250)
-      )
+      );
 
-      window._hasStackingResizeListener = true
+      window._hasStackingResizeListener = true;
     }
 
     // Helper: Get Current Viewport Tier
     function getCurrentViewportTier() {
-      const width = window.innerWidth
+      const width = window.innerWidth;
 
-      if (width <= 479) return "mobile-portrait"
-      if (width <= 767) return "mobile-landscape"
-      if (width <= 991) return "tablet"
-      return "desktop"
+      if (width <= 479) return "mobile-portrait";
+      if (width <= 767) return "mobile-landscape";
+      if (width <= 991) return "tablet";
+      return "desktop";
     }
 
     // Helper: Pulse pulse (Bounce Animation)
     function pulseElement(targetEl) {
-      const width = targetEl.offsetWidth
-      const height = targetEl.offsetHeight
-      const fontSize = parseFloat(getComputedStyle(targetEl).fontSize)
-      const stretchPx = 1.5 * fontSize
-      const targetScaleX = (width + stretchPx) / width
-      const targetScaleY = (height - stretchPx * 0.33) / height
+      const width = targetEl.offsetWidth;
+      const height = targetEl.offsetHeight;
+      const fontSize = parseFloat(getComputedStyle(targetEl).fontSize);
+      const stretchPx = 1.5 * fontSize;
+      const targetScaleX = (width + stretchPx) / width;
+      const targetScaleY = (height - stretchPx * 0.33) / height;
 
-      const tl = gsap.timeline()
+      const tl = gsap.timeline();
       tl.to(targetEl, {
         scaleX: targetScaleX,
         scaleY: targetScaleY,
@@ -397,28 +372,28 @@
         scaleY: 1,
         duration: 1,
         ease: "elastic.out(1, 0.3)"
-      })
+      });
     }
   }
 
   // Debouncer: For resizing the window
   function debounceOnWidthChange(fn, ms) {
-    let last = innerWidth
-    let timer
+    let last = innerWidth;
+    let timer;
 
     return function (...args) {
-      clearTimeout(timer)
+      clearTimeout(timer);
       timer = setTimeout(() => {
         if (innerWidth !== last) {
-          last = innerWidth
-          fn.apply(this, args)
+          last = innerWidth;
+          fn.apply(this, args);
         }
-      }, ms)
-    }
+      }, ms);
+    };
   }
 
   // Initialize Stacking Sticky Cards (Bounce)
   document.addEventListener("DOMContentLoaded", function () {
-    initStackingStickyCardsBounce()
-  })
+    initStackingStickyCardsBounce();
+  });
 </script>

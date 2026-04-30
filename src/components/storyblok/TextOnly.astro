@@ -5,7 +5,6 @@ import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
 import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro";
 
 const { blok } = Astro.props;
-console.log(blok);
 ---
 
 <section class=`intro texture-${blok.texture} relative pb-18 lg:pb-38` {...storyblokEditable(blok)}>
