@@ -104,13 +104,13 @@
 
   .texture-atoll {
     background-image: url("/assets/textures/atoll.png");
-    color: var(--color-marron);
+    color: white;
     background-size: cover;
   }
 
   .texture-atollBlob {
     background-image: url("/assets/textures/atollBlob.png");
-    color: var(--color-marron);
+    color: white;
     background-size: cover;
   }
 
@@ -122,19 +122,19 @@
 
   .texture-corailBlob {
     background-image: url("/assets/textures/corailBlob.png");
-    color: var(--color-marron);
+    color: var(--color-atoll);
     background-size: cover;
   }
 
   .texture-lavande {
     background-image: url("/assets/textures/lavande.png");
-    color: var(--color-marron);
+    color: white;
     background-size: cover;
   }
 
   .texture-lavandeBlobDark {
     background-image: url("/assets/textures/lavandeBlobDark.png");
-    color: var(--color-marron);
+    color: white;
     background-size: cover;
   }
 
