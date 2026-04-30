@@ -1,38 +1,25 @@
 ---
-import Text from "../helpers/Text.astro"
-import Logo from "../helpers/Logo.astro"
-import Button from "../helpers/Button.astro"
+import { storyblokEditable } from "@storyblok/astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro";
+
+const { blok } = Astro.props;
+console.log(blok);
 ---
 
 <section
-  class="hero flex items-start min-h-screen relative z-1 py-32 md:py-16 lg:px-32 bg-cover bg-no-repeat bg-center text-center"
-  style="background-image: url('/images/hero.jpg')">
-  <div class="w-[calc(100%-3rem)] mx-auto md:mx-8 max-w-lg sm:max-w-3xl">
-    <Logo
-      variant="long"
-      nb
-      class="w-2xs md:w-lg mx-auto mb-16 fill-[#0C6277]"
+  class="hero relative z-1 flex min-h-screen items-start bg-cover bg-center bg-no-repeat py-32 text-center md:py-16 lg:px-32"
+  style={`background-image: url("${blok.image?.filename}")`}
+  {...storyblokEditable(blok)}>
+  <div class="text-container">
+    <RichTextRenderer
+      content={blok.content}
+      resolver={(blok) => {
+        return {
+          component: StoryblokComponent,
+          props: { blok }
+        };
+      }}
     />
-
-    <Text tag="p" variant="textXL" class="breathing">
-      Ceci est une accroche
-    </Text>
-
-    <Text tag="h1" variant="displayXL" class="mb-4">
-      Prendre soin de son corps, apaiser son esprit
-    </Text>
-
-    <Text tag="p" variant="textLG" class="leading-normal mb-6">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, rem neque
-      doloribus impedit explicabo minus laborum cupiditate atque esse
-      consectetur.
-    </Text>
-
-    <div class="flex justify-center items-center gap-x-8 gap-y-2 flex-wrap">
-      <Button text="Contactez-nous" class="self-center-safe" />
-      <Button soft text="Découvrir le studio" class="self-center-safe" />
-      <Button invert text="En savoir +" class="self-center-safe" />
-      <Button accent text="Envoyer" class="self-center-safe" />
-    </div>
   </div>
 </section>
