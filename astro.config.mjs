@@ -23,6 +23,7 @@ export default defineConfig({
     components: {
       page: "Page",
       textonly: "TextOnly",
+      button: "Button",
     },
     accessToken: import.meta.env.STORYBLOK_TOKEN || "your_token_here",
     enableFallbackComponent: true,

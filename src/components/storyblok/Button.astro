@@ -1,8 +1,14 @@
 ---
-const { text, class: className, ...rest } = Astro.props;
+const { blok } = Astro.props;
 ---
 
-<a href="#" data-btn-hover="" class:list={["btnPilates", { className }]} {...rest}>
+<a
+  href={`/${blok.url.story.full_slug === "home" ? "" : blok.url.story.full_slug}`}
+  data-btn-hover=""
+  class="btnPilates"
+  soft={blok.variant === "soft" ? true : undefined}
+  invert={blok.variant === "invert" ? true : undefined}
+  accent={blok.variant === "accent" ? true : undefined}>
   <div class="btn__bg"></div>
   <div class="btn__circle-wrap">
     <div class="btn__circle">
@@ -10,7 +16,7 @@ const { text, class: className, ...rest } = Astro.props;
     </div>
   </div>
   <div class="btn__text">
-    <p class="btn-text-p">{text}</p>
+    <p class="btn-text-p">{blok.text}</p>
   </div>
 </a>
 
@@ -45,7 +51,7 @@ const { text, class: className, ...rest } = Astro.props;
   .btn-text-p {
     color: currentColor;
     white-space: nowrap;
-    margin-bottom: 0;
+    margin-block: 0;
     padding-bottom: 0.05em;
     font-size: 1em;
     font-weight: 500;

@@ -5,6 +5,7 @@ import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
 import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro";
 
 const { blok } = Astro.props;
+console.log(blok);
 ---
 
 <section class=`intro texture-${blok.texture} relative pb-18 lg:pb-38` {...storyblokEditable(blok)}>
@@ -23,7 +24,7 @@ const { blok } = Astro.props;
   </div>
   <Stickers
     variant={blok.sticker}
-    class=`w-32 lg:w-64 h-auto absolute -bottom-6 ${blok.position==="left" ? "left-8" : blok.position==="right" ? "right-8" : "right-1/2 translate-x-1/2"} z-10`
+    class=`w-32 lg:w-64 h-auto absolute -bottom-6 ${blok.stickerPosition==="left" ? "left-8" : blok.stickerPosition==="right" ? "right-8" : "right-1/2 translate-x-1/2"} z-10`
     `
   />
 </section>
