@@ -86,7 +86,7 @@ const { blok } = Astro.props;
   )
 }
 {
-  blok.type === "logo" && (
+  blok.type === "logo-base" && (
     <LogoBase
       class={`${blok.width || "size-m"} ${blok.center ? "mx-auto" : undefined}`}
       fill={`var(--color-${blok.color || "atoll"})`}
