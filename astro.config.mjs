@@ -51,6 +51,7 @@ export default defineConfig({
       button: "Button",
       cardsChoices: "CardsChoices",
       hero: "Hero",
+      logo: "Logo",
     },
     accessToken: import.meta.env.STORYBLOK_TOKEN || "your_token_here",
     enableFallbackComponent: true,

@@ -1,0 +1,95 @@
+---
+import LogoBaseline from "../../../public/assets/logos/Logo-baseline.svg";
+import LogoGauche from "../../../public/assets/logos/Logo-gauche.svg";
+import LogoHorizontal from "../../../public/assets/logos/Logo-horizontal.svg";
+import LogoIcone from "../../../public/assets/logos/Logo-icone.svg";
+import LogoMacaron from "../../../public/assets/logos/Logo-macaron.svg";
+import LogoStudioHorizontal from "../../../public/assets/logos/Logo-studio-horizontal.svg";
+import LogoStudio from "../../../public/assets/logos/Logo-studio.svg";
+import LogoBase from "../../../public/assets/logos/Logo.svg";
+
+const { blok } = Astro.props;
+---
+
+<style>
+  .size-s {
+    max-width: 200px;
+  }
+  .size-m {
+    max-width: 300px;
+  }
+  .size-l {
+    max-width: 400px;
+  }
+  .size-xl {
+    max-width: 500px;
+  }
+  .size-2xl {
+    max-width: 600px;
+  }
+</style>
+
+{
+  blok.type === "logo-baseline" && (
+    <LogoBaseline
+      class={`${blok.width || "size-m"} ${blok.center ? "mx-auto" : undefined}`}
+      fill={`var(--color-${blok.color || "atoll"})`}
+    />
+  )
+}
+{
+  blok.type === "logo-gauche" && (
+    <LogoGauche
+      class={`${blok.width || "size-m"} ${blok.center ? "mx-auto" : undefined}`}
+      fill={`var(--color-${blok.color || "atoll"})`}
+    />
+  )
+}
+{
+  blok.type === "logo-horizontal" && (
+    <LogoHorizontal
+      class={`${blok.width || "size-m"} ${blok.center ? "mx-auto" : undefined}`}
+      fill={`var(--color-${blok.color || "atoll"})`}
+    />
+  )
+}
+{
+  blok.type === "logo-icone" && (
+    <LogoIcone
+      class={`${blok.width || "size-m"} ${blok.center ? "mx-auto" : undefined}`}
+      fill={`var(--color-${blok.color || "atoll"})`}
+    />
+  )
+}
+{
+  blok.type === "logo-macaron" && (
+    <LogoMacaron
+      class={`${blok.width || "size-m"} ${blok.center ? "mx-auto" : undefined}`}
+      fill={`var(--color-${blok.color || "atoll"})`}
+    />
+  )
+}
+{
+  blok.type === "logo-studio-horizontal" && (
+    <LogoStudioHorizontal
+      class={`${blok.width || "size-m"} ${blok.center ? "mx-auto" : undefined}`}
+      fill={`var(--color-${blok.color || "atoll"})`}
+    />
+  )
+}
+{
+  blok.type === "logo-studio" && (
+    <LogoStudio
+      class={`${blok.width || "size-m"} ${blok.center ? "mx-auto" : undefined}`}
+      fill={`var(--color-${blok.color || "atoll"})`}
+    />
+  )
+}
+{
+  blok.type === "logo" && (
+    <LogoBase
+      class={`${blok.width || "size-m"} ${blok.center ? "mx-auto" : undefined}`}
+      fill={`var(--color-${blok.color || "atoll"})`}
+    />
+  )
+}
