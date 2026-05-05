@@ -1,7 +1,11 @@
 ---
-import { fetchAndCacheGoogleReviews } from "../../lib/googleReviews"
+import { fetchAndCacheGoogleReviews } from "../../lib/googleReviews";
+import { Image } from "astro:assets";
+import { storyblokEditable } from "@storyblok/astro";
 
-const googleReviews = await fetchAndCacheGoogleReviews()
+const { blok } = Astro.props;
+
+const googleReviews = await fetchAndCacheGoogleReviews();
 ---
 
 <div
@@ -9,7 +13,8 @@ const googleReviews = await fetchAndCacheGoogleReviews()
   aria-label="Testimonial Slider"
   data-centered-slider="wrapper"
   data-slider-autoplay="true"
-  class="centered-slider-group">
+  class="centered-slider-group"
+  {...storyblokEditable(blok)}>
   <div class="container mx-auto">
     <div class="centered-slider-content">
       <ul role="tablist" class="centered-slider-bullet__list">
@@ -21,9 +26,11 @@ const googleReviews = await fetchAndCacheGoogleReviews()
                 role="tab"
                 aria-selected="false"
                 class="centered-slider-bullet">
-                <img
-                  src={`/avatars/${review.reviewerId}.jpg`}
+                <Image
+                  src={`/cache/avatars/${review.reviewerId}.jpg`}
                   alt={`Avatar de ${review.name}`}
+                  width="1920"
+                  height="1920"
                 />
               </button>
             </li>
@@ -33,20 +40,18 @@ const googleReviews = await fetchAndCacheGoogleReviews()
     </div>
   </div>
   <div class="centered-slider-row">
-    <div
-      aria-label="slides"
-      data-centered-slider="list"
-      role="group"
-      class="centered-slider-list">
+    <div aria-label="slides" data-centered-slider="list" role="group" class="centered-slider-list">
       {
         googleReviews.map((review) => (
           <div data-centered-slider="slide" class="centered-slider-slide">
             <div class="centered-slider-slide__inner">
               <p class="slide-demo__description">{review.text}</p>
               <div class="slide-demo__details">
-                <img
-                  src={`/avatars/${review.reviewerId}.jpg`}
+                <Image
+                  src={`/cache/avatars/${review.reviewerId}.jpg`}
                   alt={`Avatar de ${review.name}`}
+                  width="1920"
+                  height="1920"
                   class="slide-demo__avatar"
                 />
                 <span class="slide-demo__eyebrow">{review.name}</span>
@@ -97,30 +102,22 @@ const googleReviews = await fetchAndCacheGoogleReviews()
             viewbox="0 0 24 24"
             fill="none"
             class="slider-button-arrow">
-            <path
-              d="M14 19L21 12L14 5"
-              stroke="currentColor"
-              stroke-miterlimit="10"></path>
-            <path d="M21 12H2" stroke="currentColor" stroke-miterlimit="10"
-            ></path>
+            <path d="M14 19L21 12L14 5" stroke="currentColor" stroke-miterlimit="10"></path>
+            <path d="M21 12H2" stroke="currentColor" stroke-miterlimit="10"></path>
           </svg>
         </button>
         <button
           aria-label="next slide"
           data-centered-slider="next-button"
-          class="centered-slider-button"
-          ><svg
+          class="centered-slider-button">
+          <svg
             xmlns="http://www.w3.org/2000/svg"
             width="100%"
             viewbox="0 0 24 24"
             fill="none"
             class="slider-button-arrow">
-            <path
-              d="M14 19L21 12L14 5"
-              stroke="currentColor"
-              stroke-miterlimit="10"></path>
-            <path d="M21 12H2" stroke="currentColor" stroke-miterlimit="10"
-            ></path>
+            <path d="M14 19L21 12L14 5" stroke="currentColor" stroke-miterlimit="10"></path>
+            <path d="M21 12H2" stroke="currentColor" stroke-miterlimit="10"></path>
           </svg>
         </button>
       </div>
@@ -177,8 +174,7 @@ const googleReviews = await fetchAndCacheGoogleReviews()
     background-color: rgba(239, 238, 236, 0.1);
   }
 
-  .centered-slider-row:has(.centered-slider-slide.active)
-    .centered-slider-slide:not(.active) {
+  .centered-slider-row:has(.centered-slider-slide.active) .centered-slider-slide:not(.active) {
     opacity: 0.45;
   }
 
@@ -306,66 +302,56 @@ const googleReviews = await fetchAndCacheGoogleReviews()
 </style>
 
 <script>
-  import { gsap } from "gsap"
+  import { gsap } from "gsap";
 
-  import { CustomEase } from "gsap/CustomEase"
+  import { CustomEase } from "gsap/CustomEase";
 
-  import { Draggable } from "gsap/Draggable"
-  import { InertiaPlugin } from "gsap/InertiaPlugin"
-  import { ScrollTrigger } from "gsap/ScrollTrigger"
-  gsap.registerPlugin(CustomEase, ScrollTrigger, Draggable, InertiaPlugin)
+  import { Draggable } from "gsap/Draggable";
+  import { InertiaPlugin } from "gsap/InertiaPlugin";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(CustomEase, ScrollTrigger, Draggable, InertiaPlugin);
 
-  CustomEase.create("osmo-ease", "0.625, 0.05, 0, 1")
+  CustomEase.create("osmo-ease", "0.625, 0.05, 0, 1");
 
   function initSliders() {
     const sliderWrappers = gsap.utils.toArray(
       document.querySelectorAll('[data-centered-slider="wrapper"]')
-    )
+    );
 
     sliderWrappers.forEach((sliderWrapper) => {
       const slides = gsap.utils.toArray(
         sliderWrapper.querySelectorAll('[data-centered-slider="slide"]')
-      )
+      );
       const bullets = gsap.utils.toArray(
         sliderWrapper.querySelectorAll('[data-centered-slider="bullet"]')
-      )
-      const prevButton = sliderWrapper.querySelector(
-        '[data-centered-slider="prev-button"]'
-      )
-      const nextButton = sliderWrapper.querySelector(
-        '[data-centered-slider="next-button"]'
-      )
+      );
+      const prevButton = sliderWrapper.querySelector('[data-centered-slider="prev-button"]');
+      const nextButton = sliderWrapper.querySelector('[data-centered-slider="next-button"]');
 
-      let activeElement
-      let activeBullet
-      let currentIndex = 0
-      let autoplay
+      let activeElement;
+      let activeBullet;
+      let currentIndex = 0;
+      let autoplay;
 
       // Autoplay is now enabled/disabled via a boolean attribute.
-      const autoplayEnabled =
-        sliderWrapper.getAttribute("data-slider-autoplay") === "true"
+      const autoplayEnabled = sliderWrapper.getAttribute("data-slider-autoplay") === "true";
 
       // If enabled, get the autoplay duration (in seconds) from the separate attribute.
       const autoplayDuration = autoplayEnabled
-        ? parseFloat(
-            sliderWrapper.getAttribute("data-slider-autoplay-duration")
-          ) || 0
-        : 0
+        ? parseFloat(sliderWrapper.getAttribute("data-slider-autoplay-duration")) || 0
+        : 0;
 
       // Dynamically assign unique IDs to slides
       slides.forEach((slide, i) => {
-        slide.setAttribute("id", `slide-${i}`)
-      })
+        slide.setAttribute("id", `slide-${i}`);
+      });
 
       // Set ARIA attributes on bullets if they exist
       if (bullets && bullets.length > 0) {
         bullets.forEach((bullet, i) => {
-          bullet.setAttribute("aria-controls", `slide-${i}`)
-          bullet.setAttribute(
-            "aria-selected",
-            i === currentIndex ? "true" : "false"
-          )
-        })
+          bullet.setAttribute("aria-controls", `slide-${i}`);
+          bullet.setAttribute("aria-selected", i === currentIndex ? "true" : "false");
+        });
       }
 
       const loop = horizontalLoop(slides, {
@@ -373,45 +359,42 @@ const googleReviews = await fetchAndCacheGoogleReviews()
         draggable: true,
         center: true,
         onChange: (element, index) => {
-          currentIndex = index
+          currentIndex = index;
 
-          if (activeElement) activeElement.classList.remove("active")
-          element.classList.add("active")
-          activeElement = element
+          if (activeElement) activeElement.classList.remove("active");
+          element.classList.add("active");
+          activeElement = element;
 
           if (bullets && bullets.length > 0) {
-            if (activeBullet) activeBullet.classList.remove("active")
+            if (activeBullet) activeBullet.classList.remove("active");
             if (bullets[index]) {
-              bullets[index].classList.add("active")
-              activeBullet = bullets[index]
+              bullets[index].classList.add("active");
+              activeBullet = bullets[index];
             }
             bullets.forEach((bullet, i) => {
-              bullet.setAttribute(
-                "aria-selected",
-                i === index ? "true" : "false"
-              )
-            })
+              bullet.setAttribute("aria-selected", i === index ? "true" : "false");
+            });
           }
         }
-      })
+      });
 
       // On initialization, center the slider
-      loop.toIndex(2, { duration: 0.01 })
+      loop.toIndex(2, { duration: 0.01 });
 
       function startAutoplay() {
         if (autoplayDuration > 0 && !autoplay) {
           const repeat = () => {
-            loop.next({ ease: "osmo-ease", duration: 0.725 })
-            autoplay = gsap.delayedCall(autoplayDuration, repeat)
-          }
-          autoplay = gsap.delayedCall(autoplayDuration, repeat)
+            loop.next({ ease: "osmo-ease", duration: 0.725 });
+            autoplay = gsap.delayedCall(autoplayDuration, repeat);
+          };
+          autoplay = gsap.delayedCall(autoplayDuration, repeat);
         }
       }
 
       function stopAutoplay() {
         if (autoplay) {
-          autoplay.kill()
-          autoplay = null
+          autoplay.kill();
+          autoplay = null;
         }
       }
 
@@ -424,65 +407,65 @@ const googleReviews = await fetchAndCacheGoogleReviews()
         onLeave: stopAutoplay,
         onEnterBack: startAutoplay,
         onLeaveBack: stopAutoplay
-      })
+      });
 
       // Pause autoplay on mouse hover over the slider
-      sliderWrapper.addEventListener("mouseenter", stopAutoplay)
+      sliderWrapper.addEventListener("mouseenter", stopAutoplay);
       sliderWrapper.addEventListener("mouseleave", () => {
-        if (ScrollTrigger.isInViewport(sliderWrapper)) startAutoplay()
-      })
+        if (ScrollTrigger.isInViewport(sliderWrapper)) startAutoplay();
+      });
 
       // Slide click event for direct navigation
       slides.forEach((slide, i) => {
         slide.addEventListener("click", () => {
-          loop.toIndex(i, { ease: "osmo-ease", duration: 0.725 })
-        })
-      })
+          loop.toIndex(i, { ease: "osmo-ease", duration: 0.725 });
+        });
+      });
 
       // Bullets click event for direct navigation (if available)
       if (bullets && bullets.length > 0) {
         bullets.forEach((bullet, i) => {
           bullet.addEventListener("click", () => {
-            loop.toIndex(i, { ease: "osmo-ease", duration: 0.725 })
-            if (activeBullet) activeBullet.classList.remove("active")
-            bullet.classList.add("active")
-            activeBullet = bullet
+            loop.toIndex(i, { ease: "osmo-ease", duration: 0.725 });
+            if (activeBullet) activeBullet.classList.remove("active");
+            bullet.classList.add("active");
+            activeBullet = bullet;
             bullets.forEach((b, j) => {
-              b.setAttribute("aria-selected", j === i ? "true" : "false")
-            })
-          })
-        })
+              b.setAttribute("aria-selected", j === i ? "true" : "false");
+            });
+          });
+        });
       }
 
       // Prev/Next button listeners (if the buttons exist)
       if (prevButton) {
         prevButton.addEventListener("click", () => {
-          let newIndex = currentIndex - 1
-          if (newIndex < 0) newIndex = slides.length - 1
-          loop.toIndex(newIndex, { ease: "osmo-ease", duration: 0.725 })
-        })
+          let newIndex = currentIndex - 1;
+          if (newIndex < 0) newIndex = slides.length - 1;
+          loop.toIndex(newIndex, { ease: "osmo-ease", duration: 0.725 });
+        });
       }
 
       if (nextButton) {
         nextButton.addEventListener("click", () => {
-          let newIndex = currentIndex + 1
-          if (newIndex >= slides.length) newIndex = 0
-          loop.toIndex(newIndex, { ease: "osmo-ease", duration: 0.725 })
-        })
+          let newIndex = currentIndex + 1;
+          if (newIndex >= slides.length) newIndex = 0;
+          loop.toIndex(newIndex, { ease: "osmo-ease", duration: 0.725 });
+        });
       }
-    })
+    });
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    initSliders()
-  })
+    initSliders();
+  });
 
   // GSAP Helper function to create a looping slider
   // Read more: https://gsap.com/docs/v3/HelperFunctions/helpers/seamlessLoop
   function horizontalLoop(items, config) {
-    let timeline
-    items = gsap.utils.toArray(items)
-    config = config || {}
+    let timeline;
+    items = gsap.utils.toArray(items);
+    config = config || {};
     gsap.context(() => {
       let onChange = config.onChange,
         lastIndex = 0,
@@ -491,16 +474,15 @@ const googleReviews = await fetchAndCacheGoogleReviews()
           onUpdate:
             onChange &&
             function () {
-              let i = tl.closestIndex()
+              let i = tl.closestIndex();
               if (lastIndex !== i) {
-                lastIndex = i
-                onChange(items[i], i)
+                lastIndex = i;
+                onChange(items[i], i);
               }
             },
           paused: config.paused,
           defaults: { ease: "none" },
-          onReverseComplete: () =>
-            tl.totalTime(tl.rawTime() + tl.duration() * 100)
+          onReverseComplete: () => tl.totalTime(tl.rawTime() + tl.duration() * 100)
         }),
         length = items.length,
         startX = items[0].offsetLeft,
@@ -512,8 +494,7 @@ const googleReviews = await fetchAndCacheGoogleReviews()
         indexIsDirty = false,
         center = config.center,
         pixelsPerSecond = (config.speed || 1) * 100,
-        snap =
-          config.snap === false ? (v) => v : gsap.utils.snap(config.snap || 1),
+        snap = config.snap === false ? (v) => v : gsap.utils.snap(config.snap || 1),
         timeOffset = 0,
         container =
           center === true
@@ -525,67 +506,61 @@ const googleReviews = await fetchAndCacheGoogleReviews()
           (xPercents[length - 1] / 100) * widths[length - 1] -
           startX +
           spaceBefore[0] +
-          items[length - 1].offsetWidth *
-            gsap.getProperty(items[length - 1], "scaleX") +
+          items[length - 1].offsetWidth * gsap.getProperty(items[length - 1], "scaleX") +
           (parseFloat(config.paddingRight) || 0),
         populateWidths = () => {
           let b1 = container.getBoundingClientRect(),
-            b2
+            b2;
           items.forEach((el, i) => {
-            widths[i] = parseFloat(gsap.getProperty(el, "width", "px"))
+            widths[i] = parseFloat(gsap.getProperty(el, "width", "px"));
             xPercents[i] = snap(
               (parseFloat(gsap.getProperty(el, "x", "px")) / widths[i]) * 100 +
                 gsap.getProperty(el, "xPercent")
-            )
-            b2 = el.getBoundingClientRect()
-            spaceBefore[i] = b2.left - (i ? b1.right : b1.left)
-            b1 = b2
-          })
+            );
+            b2 = el.getBoundingClientRect();
+            spaceBefore[i] = b2.left - (i ? b1.right : b1.left);
+            b1 = b2;
+          });
           gsap.set(items, {
             xPercent: (i) => xPercents[i]
-          })
-          totalWidth = getTotalWidth()
+          });
+          totalWidth = getTotalWidth();
         },
         timeWrap,
         populateOffsets = () => {
-          timeOffset = center
-            ? (tl.duration() * (container.offsetWidth / 2)) / totalWidth
-            : 0
+          timeOffset = center ? (tl.duration() * (container.offsetWidth / 2)) / totalWidth : 0;
           center &&
             times.forEach((t, i) => {
               times[i] = timeWrap(
-                tl.labels["label" + i] +
-                  (tl.duration() * widths[i]) / 2 / totalWidth -
-                  timeOffset
-              )
-            })
+                tl.labels["label" + i] + (tl.duration() * widths[i]) / 2 / totalWidth - timeOffset
+              );
+            });
         },
         getClosest = (values, value, wrap) => {
           let i = values.length,
             closest = 1e10,
             index = 0,
-            d
+            d;
           while (i--) {
-            d = Math.abs(values[i] - value)
+            d = Math.abs(values[i] - value);
             if (d > wrap / 2) {
-              d = wrap - d
+              d = wrap - d;
             }
             if (d < closest) {
-              closest = d
-              index = i
+              closest = d;
+              index = i;
             }
           }
-          return index
+          return index;
         },
         populateTimeline = () => {
-          let i, item, curX, distanceToStart, distanceToLoop
-          tl.clear()
+          let i, item, curX, distanceToStart, distanceToLoop;
+          tl.clear();
           for (i = 0; i < length; i++) {
-            item = items[i]
-            curX = (xPercents[i] / 100) * widths[i]
-            distanceToStart = item.offsetLeft + curX - startX + spaceBefore[0]
-            distanceToLoop =
-              distanceToStart + widths[i] * gsap.getProperty(item, "scaleX")
+            item = items[i];
+            curX = (xPercents[i] / 100) * widths[i];
+            distanceToStart = item.offsetLeft + curX - startX + spaceBefore[0];
+            distanceToLoop = distanceToStart + widths[i] * gsap.getProperty(item, "scaleX");
             tl.to(
               item,
               {
@@ -597,81 +572,72 @@ const googleReviews = await fetchAndCacheGoogleReviews()
               .fromTo(
                 item,
                 {
-                  xPercent: snap(
-                    ((curX - distanceToLoop + totalWidth) / widths[i]) * 100
-                  )
+                  xPercent: snap(((curX - distanceToLoop + totalWidth) / widths[i]) * 100)
                 },
                 {
                   xPercent: xPercents[i],
-                  duration:
-                    (curX - distanceToLoop + totalWidth - curX) /
-                    pixelsPerSecond,
+                  duration: (curX - distanceToLoop + totalWidth - curX) / pixelsPerSecond,
                   immediateRender: false
                 },
                 distanceToLoop / pixelsPerSecond
               )
-              .add("label" + i, distanceToStart / pixelsPerSecond)
-            times[i] = distanceToStart / pixelsPerSecond
+              .add("label" + i, distanceToStart / pixelsPerSecond);
+            times[i] = distanceToStart / pixelsPerSecond;
           }
-          timeWrap = gsap.utils.wrap(0, tl.duration())
+          timeWrap = gsap.utils.wrap(0, tl.duration());
         },
         refresh = (deep) => {
-          let progress = tl.progress()
-          tl.progress(0, true)
-          populateWidths()
-          deep && populateTimeline()
-          populateOffsets()
-          deep && tl.draggable
-            ? tl.time(times[curIndex], true)
-            : tl.progress(progress, true)
+          let progress = tl.progress();
+          tl.progress(0, true);
+          populateWidths();
+          deep && populateTimeline();
+          populateOffsets();
+          deep && tl.draggable ? tl.time(times[curIndex], true) : tl.progress(progress, true);
         },
         onResize = () => refresh(true),
-        proxy
-      gsap.set(items, { x: 0 })
-      populateWidths()
-      populateTimeline()
-      populateOffsets()
-      window.addEventListener("resize", onResize)
+        proxy;
+      gsap.set(items, { x: 0 });
+      populateWidths();
+      populateTimeline();
+      populateOffsets();
+      window.addEventListener("resize", onResize);
       function toIndex(index, vars) {
-        vars = vars || {}
-        Math.abs(index - curIndex) > length / 2 &&
-          (index += index > curIndex ? -length : length) // always go in the shortest direction
+        vars = vars || {};
+        Math.abs(index - curIndex) > length / 2 && (index += index > curIndex ? -length : length); // always go in the shortest direction
         let newIndex = gsap.utils.wrap(0, length, index),
-          time = times[newIndex]
+          time = times[newIndex];
         if (time > tl.time() !== index > curIndex && index !== curIndex) {
           // if we're wrapping the timeline's playhead, make the proper adjustments
-          time += tl.duration() * (index > curIndex ? 1 : -1)
+          time += tl.duration() * (index > curIndex ? 1 : -1);
         }
         if (time < 0 || time > tl.duration()) {
-          vars.modifiers = { time: timeWrap }
+          vars.modifiers = { time: timeWrap };
         }
-        curIndex = newIndex
-        vars.overwrite = true
-        gsap.killTweensOf(proxy)
-        return vars.duration === 0
-          ? tl.time(timeWrap(time))
-          : tl.tweenTo(time, vars)
+        curIndex = newIndex;
+        vars.overwrite = true;
+        gsap.killTweensOf(proxy);
+        return vars.duration === 0 ? tl.time(timeWrap(time)) : tl.tweenTo(time, vars);
       }
-      tl.toIndex = (index, vars) => toIndex(index, vars)
+      tl.toIndex = (index, vars) => toIndex(index, vars);
       tl.closestIndex = (setCurrent) => {
-        let index = getClosest(times, tl.time(), tl.duration())
+        let index = getClosest(times, tl.time(), tl.duration());
         if (setCurrent) {
-          curIndex = index
-          indexIsDirty = false
+          curIndex = index;
+          indexIsDirty = false;
         }
-        return index
-      }
-      tl.current = () => (indexIsDirty ? tl.closestIndex(true) : curIndex)
-      tl.next = (vars) => toIndex(tl.current() + 1, vars)
-      tl.previous = (vars) => toIndex(tl.current() - 1, vars)
-      tl.times = times
-      tl.progress(1, true).progress(0, true) // pre-render for performance
+        return index;
+      };
+      tl.current = () => (indexIsDirty ? tl.closestIndex(true) : curIndex);
+      tl.next = (vars) => toIndex(tl.current() + 1, vars);
+      tl.previous = (vars) => toIndex(tl.current() - 1, vars);
+      tl.times = times;
+      tl.progress(1, true).progress(0, true); // pre-render for performance
       if (config.reversed) {
-        tl.vars.onReverseComplete()
-        tl.reverse()
+        tl.vars.onReverseComplete();
+        tl.reverse();
       }
       if (config.draggable && typeof Draggable === "function") {
-        proxy = document.createElement("div")
+        proxy = document.createElement("div");
         let wrap = gsap.utils.wrap(0, 1),
           ratio,
           startProgress,
@@ -680,28 +646,25 @@ const googleReviews = await fetchAndCacheGoogleReviews()
           lastSnap,
           initChangeX,
           wasPlaying,
-          align = () =>
-            tl.progress(
-              wrap(startProgress + (draggable.startX - draggable.x) * ratio)
-            ),
-          syncIndex = () => tl.closestIndex(true)
+          align = () => tl.progress(wrap(startProgress + (draggable.startX - draggable.x) * ratio)),
+          syncIndex = () => tl.closestIndex(true);
         typeof InertiaPlugin === "undefined" &&
           console.warn(
             "InertiaPlugin required for momentum-based scrolling and snapping. https://greensock.com/club"
-          )
+          );
         draggable = Draggable.create(proxy, {
           trigger: items[0].parentNode,
           type: "x",
           onPressInit() {
-            let x = this.x
-            gsap.killTweensOf(tl)
-            wasPlaying = !tl.paused()
-            tl.pause()
-            startProgress = tl.progress()
-            refresh()
-            ratio = 1 / totalWidth
-            initChangeX = startProgress / -ratio - x
-            gsap.set(proxy, { x: startProgress / -ratio })
+            let x = this.x;
+            gsap.killTweensOf(tl);
+            wasPlaying = !tl.paused();
+            tl.pause();
+            startProgress = tl.progress();
+            refresh();
+            ratio = 1 / totalWidth;
+            initChangeX = startProgress / -ratio - x;
+            gsap.set(proxy, { x: startProgress / -ratio });
           },
           onDrag: align,
           onThrowUpdate: align,
@@ -709,34 +672,33 @@ const googleReviews = await fetchAndCacheGoogleReviews()
           inertia: true,
           snap(value) {
             if (Math.abs(startProgress / -ratio - this.x) < 10) {
-              return lastSnap + initChangeX
+              return lastSnap + initChangeX;
             }
             let time = -(value * ratio) * tl.duration(),
               wrappedTime = timeWrap(time),
               snapTime = times[getClosest(times, wrappedTime, tl.duration())],
-              dif = snapTime - wrappedTime
-            Math.abs(dif) > tl.duration() / 2 &&
-              (dif += dif < 0 ? tl.duration() : -tl.duration())
-            lastSnap = (time + dif) / tl.duration() / -ratio
-            return lastSnap
+              dif = snapTime - wrappedTime;
+            Math.abs(dif) > tl.duration() / 2 && (dif += dif < 0 ? tl.duration() : -tl.duration());
+            lastSnap = (time + dif) / tl.duration() / -ratio;
+            return lastSnap;
           },
           onRelease() {
-            syncIndex()
-            draggable.isThrowing && (indexIsDirty = true)
+            syncIndex();
+            draggable.isThrowing && (indexIsDirty = true);
           },
           onThrowComplete: () => {
-            syncIndex()
-            wasPlaying && tl.play()
+            syncIndex();
+            wasPlaying && tl.play();
           }
-        })[0]
-        tl.draggable = draggable
+        })[0];
+        tl.draggable = draggable;
       }
-      tl.closestIndex(true)
-      lastIndex = curIndex
-      onChange && onChange(items[curIndex], curIndex)
-      timeline = tl
-      return () => window.removeEventListener("resize", onResize)
-    })
-    return timeline
+      tl.closestIndex(true);
+      lastIndex = curIndex;
+      onChange && onChange(items[curIndex], curIndex);
+      timeline = tl;
+      return () => window.removeEventListener("resize", onResize);
+    });
+    return timeline;
   }
 </script>

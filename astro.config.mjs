@@ -52,6 +52,8 @@ export default defineConfig({
       cardsChoices: "CardsChoices",
       hero: "Hero",
       logo: "Logo",
+      marquee: "Marquee",
+      testimonials: "Testimonials",
     },
     accessToken: import.meta.env.STORYBLOK_TOKEN || "your_token_here",
     enableFallbackComponent: true,
