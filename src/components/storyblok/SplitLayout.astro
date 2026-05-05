@@ -1,0 +1,87 @@
+---
+import { Image, inferRemoteSize } from "astro:assets";
+import { storyblokEditable } from "@storyblok/astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro";
+
+const { blok } = Astro.props;
+const posX = blok.image?.focus.split(":")[0].split("x")[0] || "50";
+const posY = blok.image?.focus.split(":")[0].split("x")[1] || "50";
+const { width, height } = await inferRemoteSize(blok.image?.filename);
+const focalPointX = (parseInt(posX) / width) * 100;
+const focalPointY = (parseInt(posY) / height) * 100;
+console.log(focalPointX, focalPointY);
+---
+
+<section class="split-layout" {...storyblokEditable(blok)}>
+  <div class="image">
+    <Image
+      src={blok.image?.filename}
+      alt={blok.image?.alt}
+      width={width}
+      height={height}
+      layout="constrained"
+      class="focal h-full w-full object-cover"
+    />
+  </div>
+  <div class="content text-container-base">
+    <RichTextRenderer
+      content={blok.content}
+      resolver={(blok) => {
+        return {
+          component: StoryblokComponent,
+          props: { blok }
+        };
+      }}
+    />
+  </div>
+</section>
+
+<script>
+  function setImageHeight() {
+    const contentHeight = document.querySelector(".content")?.clientHeight;
+    const image = document.querySelector(".image");
+    if (image) {
+      image.style.height = `${contentHeight}px`;
+    }
+  }
+
+  // Run on initial load
+  setImageHeight();
+
+  // Run on resize
+  window.addEventListener("resize", setImageHeight);
+</script>
+
+<style define:vars={{ focalPointX, focalPointY }}>
+  .split-layout {
+    display: grid;
+    gap: 0;
+  }
+
+  .image {
+    max-height: none;
+  }
+
+  .focal {
+    object-position: calc(var(--focalPointX) * 1%) calc(var(--focalPointY) * 1%);
+  }
+
+  /* On mobile, stack vertically */
+  @media (max-width: 1024px) {
+    .split-layout {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+    }
+    .image {
+      max-height: 50vh;
+    }
+  }
+
+  /* Ensure image fills its container while maintaining aspect ratio */
+  .split-layout > :first-child img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>

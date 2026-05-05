@@ -54,6 +54,7 @@ export default defineConfig({
       logo: "Logo",
       marquee: "Marquee",
       testimonials: "Testimonials",
+      splitLayout: "SplitLayout",
     },
     accessToken: import.meta.env.STORYBLOK_TOKEN || "your_token_here",
     enableFallbackComponent: true,

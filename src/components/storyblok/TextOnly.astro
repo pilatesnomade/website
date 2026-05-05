@@ -9,7 +9,7 @@ const { blok } = Astro.props;
 
 <section class=`intro texture-${blok.texture} relative pb-18 lg:pb-38` {...storyblokEditable(blok)}>
   <div class="py-12 lg:py-24">
-    <div class="text-container">
+    <div class="text-container-big">
       <RichTextRenderer
         content={blok.content}
         resolver={(blok) => {
