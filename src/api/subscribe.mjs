@@ -1,15 +1,12 @@
-import type { APIRoute } from "astro";
-
 const MAILJET_API_KEY = import.meta.env.MAILJET_API_KEY;
 const MAILJET_API_SECRET = import.meta.env.MAILJET_API_SECRET;
 const MAILJET_LIST_ID = import.meta.env.MAILJET_LIST_ID;
 
-function validateEmail(email: string): boolean {
+function validateEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-export default {
-  async fetch(request: Request) {
+export async function GET(request) {
     if (!MAILJET_API_KEY || !MAILJET_API_SECRET || !MAILJET_LIST_ID) {
     return new Response(JSON.stringify({ error: "Server configuration error" }), {
       status: 500,
@@ -17,7 +14,7 @@ export default {
     });
   }
 
-  let email: string;
+  let email;
   try {
     const body = await request.json();
     email = body.email?.trim();
@@ -48,7 +45,7 @@ export default {
       body: JSON.stringify({ Email: email, Name: "New Contact", IsExcludedFromCampaigns: true })
     });
 
-    let contactId: number | undefined;
+    let contactId;
 
     if (contactResponse.ok) {
       const contactData = await contactResponse.json();
