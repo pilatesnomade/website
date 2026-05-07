@@ -6,7 +6,7 @@ function validateEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-export async function GET(request) {
+export async function POST(request) {
     if (!MAILJET_API_KEY || !MAILJET_API_SECRET || !MAILJET_LIST_ID) {
     return new Response(JSON.stringify({ error: "Server configuration error" }), {
       status: 500,
