@@ -93,7 +93,7 @@ export async function POST(request) {
       method: "POST",
       headers,
       body: JSON.stringify({
-        ListID: parseInt(MAILJET_LIST_ID, 10),
+        ListID: MAILJET_LIST_ID,
         ContactID: contactId
       })
     });
