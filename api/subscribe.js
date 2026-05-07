@@ -93,7 +93,7 @@ export async function POST(request) {
       method: "POST",
       headers,
       body: JSON.stringify({
-        ListID: MAILJET_LIST_ID,
+        ListAlt: "eung2dart@lists.mailjet.com",
         ContactID: contactId
       })
     });
