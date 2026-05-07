@@ -39,6 +39,30 @@ export async function POST(request) {
   };
 
   try {
+    // First, check if contact already exists
+    const getContactResponse = await fetch(
+      `https://api.mailjet.com/v3/REST/contact/${encodeURIComponent(email)}`,
+      { method: "GET", headers }
+    );
+
+    if (getContactResponse.ok) {
+      const contactData = await getContactResponse.json();
+      if (contactData.Data && contactData.Data.length > 0) {
+        const contactId = contactData.Data[0].ID;
+        return new Response(JSON.stringify({ error: "Contact already exists", contactId }), {
+          status: 409,
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+    } else if (getContactResponse.status !== 404) {
+      const errorData = await getContactResponse.json().catch(() => ({}));
+      return new Response(
+        JSON.stringify({ error: errorData?.ErrorMessage || "Failed to check contact" }),
+        { status: getContactResponse.status, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    // Contact not found, proceed with POST to create
     const contactResponse = await fetch("https://api.mailjet.com/v3/REST/contact", {
       method: "POST",
       headers,
@@ -50,24 +74,12 @@ export async function POST(request) {
     if (contactResponse.ok) {
       const contactData = await contactResponse.json();
       contactId = contactData.Data?.[0]?.ID;
-    } else if (contactResponse.status !== 409) {
+    } else {
       const errorData = await contactResponse.json().catch(() => ({}));
       return new Response(
         JSON.stringify({ error: errorData?.ErrorMessage || "Failed to create contact" }),
         { status: contactResponse.status, headers: { "Content-Type": "application/json" } }
       );
-    }
-
-    if (!contactId) {
-      const getContactResponse = await fetch(
-        `https://api.mailjet.com/v3/REST/contact?Email=${encodeURIComponent(email)}`,
-        { method: "GET", headers }
-      );
-
-      if (getContactResponse.ok) {
-        const contactData = await getContactResponse.json();
-        contactId = contactData.Data?.[0]?.ID;
-      }
     }
 
     if (!contactId) {
