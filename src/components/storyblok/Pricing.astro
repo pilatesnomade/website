@@ -1,0 +1,24 @@
+---
+import { storyblokEditable } from "@storyblok/astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro";
+
+const { blok } = Astro.props;
+---
+
+<section class=`pricing relative pb-18 lg:pb-38` {...storyblokEditable(blok)}>
+  <div class="intro text-container-big py-12 lg:py-24">
+    <RichTextRenderer
+      content={blok.intro}
+      resolver={(blok) => {
+        return {
+          component: StoryblokComponent,
+          props: { blok }
+        };
+      }}
+    />
+  </div>
+  <div class="pricing-cards">
+    {blok.cards.map((card) => <div class="pricing-card text-container-small"></div>)}
+  </div>
+</section>

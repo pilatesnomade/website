@@ -1,0 +1,217 @@
+---
+import { storyblokEditable } from "@storyblok/astro";
+import { renderRichText } from "@storyblok/astro";
+import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import { convert } from "html-to-text";
+
+const { blok } = Astro.props;
+
+const jsondata = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  name: blok.faqTitle || "FAQ",
+  description: blok.faqDescription || "Foire aux questions de Pilates Nomade",
+  mainEntity: blok.faq?.map((qa) => ({
+    "@type": "Question",
+    name: qa.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: convert(renderRichText(qa.response), {
+        wordwrap: null,
+        selectors: [
+          { selector: "a", options: { ignoreHref: true } },
+          { selector: "strong", format: "inline", options: { uppercase: true } },
+          { selector: "em", format: "inline", options: { uppercase: true } },
+          { selector: "b", format: "inline", options: { uppercase: true } },
+          { selector: "br", format: "skip" },
+          {
+            selector: "p",
+            format: "inline",
+            options: { leadingLineBreak: 0, trailingLineBreak: 0 }
+          },
+          {
+            selector: "li",
+            format: "inlineSurround",
+            options: { leadingLineBreak: 0, trailingLineBreak: 0, prefix: " -" }
+          },
+          {
+            selector: "ul",
+            format: "inline",
+            options: { leadingLineBreak: 0, trailingLineBreak: 0 }
+          },
+          {
+            selector: "ol",
+            format: "inline",
+            options: { leadingLineBreak: 0, trailingLineBreak: 0 }
+          }
+        ]
+      })
+    }
+  }))
+};
+const json = `${JSON.stringify(jsondata, null, 2)}`;
+---
+
+<section {...storyblokEditable(blok)} class="faq my-16 flex items-center justify-center">
+  <div data-accordion-close-siblings="true" data-accordion-css-init="" class="accordion-css">
+    <ul class="accordion-css__list">
+      {
+        blok.faq?.map((qa) => (
+          <li data-accordion-status="not-active" class="accordion-css__item">
+            <div data-hover="" data-accordion-toggle="" class="accordion-css__item-top">
+              <h3 class="accordion-css__item-h3 text-container-base">{qa.question}</h3>
+              <div class="accordion-css__item-icon">
+                <svg
+                  class="accordion-css__item-icon-svg"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="100%"
+                  viewbox="0 0 36 36"
+                  fill="none">
+                  <path
+                    d="M28.5 22.5L18 12L7.5 22.5"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-miterlimit="10"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div class="accordion-css__item-bottom">
+              <div class="accordion-css__item-bottom-wrap">
+                <div class="accordion-css__item-bottom-content">
+                  <div class="accordion-css__item-p text-container-small">
+                    <RichTextRenderer
+                      content={qa.response}
+                      resolver={(blok) => {
+                        return {
+                          component: StoryblokComponent,
+                          props: { blok }
+                        };
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <script type="application/ld+json" set:html={json} />
+</section>
+
+<style>
+  .accordion-css {
+    max-width: 1200px;
+    position: relative;
+  }
+
+  .accordion-css__list {
+    grid-column-gap: 0.5em;
+    grid-row-gap: 0.5em;
+    flex-flow: column;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    display: flex;
+    position: static;
+  }
+
+  .accordion-css__item {
+    background-color: #efeeec;
+    border-radius: 0.75em;
+    list-style: none;
+  }
+
+  .accordion-css__item-top {
+    grid-column-gap: 1em;
+    grid-row-gap: 1em;
+    cursor: pointer;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 1em 1em 1.5em;
+    display: flex;
+  }
+
+  .accordion-css__item-bottom {
+    transition: grid-template-rows 0.6s cubic-bezier(0.625, 0.05, 0, 1);
+    grid-template-rows: 0fr;
+    display: grid;
+    position: relative;
+    overflow: hidden;
+  }
+
+  [data-accordion-status="active"] .accordion-css__item-bottom {
+    grid-template-rows: 1fr;
+  }
+
+  .accordion-css__item-bottom-wrap {
+    flex-flow: column;
+    height: 100000%;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .accordion-css__item-bottom-content {
+    padding-bottom: 1.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+  }
+
+  .accordion-css__item-icon {
+    transition: transform 0.6s cubic-bezier(0.625, 0.05, 0, 1);
+    background-color: #2c2c2c;
+    color: #fff;
+    border-radius: 50%;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    width: 2em;
+    height: 2em;
+    display: flex;
+    transform: rotate(180deg);
+  }
+
+  [data-accordion-status="active"] .accordion-css__item-icon {
+    transform: rotate(0.001deg);
+  }
+
+  .accordion-css__item-icon-svg {
+    width: 1em;
+  }
+</style>
+
+<script>
+  function initAccordionCSS() {
+    document.querySelectorAll("[data-accordion-css-init]").forEach((accordion) => {
+      const closeSiblings = accordion.getAttribute("data-accordion-close-siblings") === "true";
+
+      accordion.addEventListener("click", (event) => {
+        const toggle = event.target.closest("[data-accordion-toggle]");
+        if (!toggle) return; // Exit if the clicked element is not a toggle
+
+        const singleAccordion = toggle.closest("[data-accordion-status]");
+        if (!singleAccordion) return; // Exit if no accordion container is found
+
+        const isActive = singleAccordion.getAttribute("data-accordion-status") === "active";
+        singleAccordion.setAttribute("data-accordion-status", isActive ? "not-active" : "active");
+
+        // When [data-accordion-close-siblings="true"]
+        if (closeSiblings && !isActive) {
+          accordion.querySelectorAll('[data-accordion-status="active"]').forEach((sibling) => {
+            if (sibling !== singleAccordion)
+              sibling.setAttribute("data-accordion-status", "not-active");
+          });
+        }
+      });
+    });
+  }
+
+  // Initialize Accordion CSS
+  document.addEventListener("DOMContentLoaded", () => {
+    initAccordionCSS();
+  });
+</script>

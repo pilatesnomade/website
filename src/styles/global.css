@@ -99,55 +99,66 @@
   .texture-jauneBlob {
     background-image: url("/assets/textures/jauneBlob.png");
     color: var(--color-marron);
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    fill: var(--color-marron);
   }
 
   .texture-atoll {
     background-image: url("/assets/textures/atoll.png");
     color: white;
     background-size: cover;
+    fill: white;
   }
 
   .texture-atollBlob {
     background-image: url("/assets/textures/atollBlob.png");
     color: white;
     background-size: cover;
+    fill: white;
   }
 
   .texture-corail {
     background-image: url("/assets/textures/corail.png");
     color: var(--color-marron);
     background-size: cover;
+    fill: var(--color-marron);
   }
 
   .texture-corailBlob {
     background-image: url("/assets/textures/corailBlob.png");
     color: var(--color-atoll);
     background-size: cover;
+    fill: var(--color-atoll);
   }
 
   .texture-lavande {
     background-image: url("/assets/textures/lavande.png");
     color: white;
     background-size: cover;
+    fill: white;
   }
 
   .texture-lavandeBlobDark {
     background-image: url("/assets/textures/lavandeBlobDark.png");
     color: white;
     background-size: cover;
+    fill: white;
   }
 
   .texture-lavandeBlobLight {
     background-image: url("/assets/textures/lavandeBlobLight.png");
     color: var(--color-marron);
     background-size: cover;
+    fill: var(--color-marron);
   }
 
   .texture-pastel {
     background-image: url("/assets/textures/pastel.png");
     color: var(--color-marron);
     background-size: cover;
+    fill: var(--color-marron);
   }
   .text-container-big {
     @apply prose-base md:prose-2xl lg:prose-headings:text-7xl xl:prose-p:text-5xl mx-auto w-full max-w-screen px-8 lg:px-16 2xl:max-w-screen-2xl;
@@ -158,6 +169,13 @@
   }
   .text-container-base {
     @apply prose-base md:prose-xl lg:prose-headings:text-5xl xl:prose-p:text-3xl mx-auto w-full max-w-screen px-8 lg:px-16 2xl:max-w-screen-2xl;
+    ul,
+    ol {
+      @apply list-inside list-disc;
+    }
+  }
+  .text-container-small {
+    @apply prose-base md:prose-base lg:prose-headings:text-xl xl:prose-p:text-xl mx-auto w-full max-w-screen px-8 lg:px-16 2xl:max-w-screen-2xl;
     ul,
     ol {
       @apply list-inside list-disc;

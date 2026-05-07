@@ -10,7 +10,6 @@ const posY = blok.image?.focus.split(":")[0].split("x")[1] || "50";
 const { width, height } = await inferRemoteSize(blok.image?.filename);
 const focalPointX = (parseInt(posX) / width) * 100;
 const focalPointY = (parseInt(posY) / height) * 100;
-console.log(focalPointX, focalPointY);
 ---
 
 <section class="split-layout" {...storyblokEditable(blok)}>

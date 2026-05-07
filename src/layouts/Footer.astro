@@ -1,24 +1,35 @@
+---
+import Logo from "../components/storyblok/Logo.astro";
+
+const logo = {
+  type: "logo-baseline",
+  width: "size-s",
+  color: "atoll",
+  center: true
+};
+
+const footer = {
+  catchline:
+    "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit."
+};
+---
+
 <section class="bg-gray-50 py-10 sm:pt-16 lg:pt-24">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-2 gap-x-12 gap-y-16 md:col-span-3 lg:grid-cols-6">
       <div class="col-span-2 md:col-span-3 lg:col-span-2 lg:pr-8">
-        <img
-          class="h-9 w-auto"
-          src="https://cdn.rareblocks.xyz/collection/celebration/images/logo.svg"
-          alt=""
-        />
-
-        <p class="mt-7 text-base leading-relaxed text-gray-600">
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
-          consequat duis enim velit mollit.
-        </p>
-
+        <Logo blok={logo} />
+        {
+          footer.catchline && (
+            <p class="mt-7 text-base leading-relaxed text-gray-600">{footer.catchline}</p>
+          )
+        }
         <ul class="mt-9 flex items-center space-x-3">
           <li>
             <a
               href="#"
               title=""
-              class="flex h-7 w-7 items-center justify-center rounded-full bg-gray-800 text-white transition-all duration-200 hover:bg-blue-600 focus:bg-blue-600">
+              class="bg-atoll hover:bg-corail focus:bg-corail flex h-7 w-7 items-center justify-center rounded-full text-white transition-all duration-200">
               <svg
                 class="h-4 w-4"
                 xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +46,7 @@
             <a
               href="#"
               title=""
-              class="flex h-7 w-7 items-center justify-center rounded-full bg-gray-800 text-white transition-all duration-200 hover:bg-blue-600 focus:bg-blue-600">
+              class="bg-atoll hover:bg-corail focus:bg-corail flex h-7 w-7 items-center justify-center rounded-full text-white transition-all duration-200">
               <svg
                 class="h-4 w-4"
                 xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +63,7 @@
             <a
               href="#"
               title=""
-              class="flex h-7 w-7 items-center justify-center rounded-full bg-gray-800 text-white transition-all duration-200 hover:bg-blue-600 focus:bg-blue-600">
+              class="bg-atoll hover:bg-corail focus:bg-corail flex h-7 w-7 items-center justify-center rounded-full text-white transition-all duration-200">
               <svg
                 class="h-4 w-4"
                 xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +84,7 @@
             <a
               href="#"
               title=""
-              class="flex h-7 w-7 items-center justify-center rounded-full bg-gray-800 text-white transition-all duration-200 hover:bg-blue-600 focus:bg-blue-600">
+              class="bg-atoll hover:bg-corail focus:bg-corail flex h-7 w-7 items-center justify-center rounded-full text-white transition-all duration-200">
               <svg
                 class="h-4 w-4"
                 xmlns="http://www.w3.org/2000/svg"
@@ -91,14 +102,14 @@
       </div>
 
       <div>
-        <p class="text-sm font-semibold tracking-widest text-gray-400 uppercase">Company</p>
+        <p class="text-sm font-semibold tracking-widest text-gray-400 uppercase">Pages</p>
 
         <ul class="mt-6 space-y-4">
           <li>
             <a
               href="#"
               title=""
-              class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
+              class="hover:text-corail focus:text-corail flex text-base text-black transition-all duration-200">
               About
             </a>
           </li>
@@ -107,7 +118,7 @@
             <a
               href="#"
               title=""
-              class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
+              class="hover:text-corail focus:text-corail flex text-base text-black transition-all duration-200">
               Features
             </a>
           </li>
@@ -116,7 +127,7 @@
             <a
               href="#"
               title=""
-              class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
+              class="hover:text-corail focus:text-corail flex text-base text-black transition-all duration-200">
               Works
             </a>
           </li>
@@ -125,7 +136,7 @@
             <a
               href="#"
               title=""
-              class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
+              class="hover:text-corail focus:text-corail flex text-base text-black transition-all duration-200">
               Career
             </a>
           </li>
@@ -133,14 +144,14 @@
       </div>
 
       <div>
-        <p class="text-sm font-semibold tracking-widest text-gray-400 uppercase">Help</p>
+        <p class="text-sm font-semibold tracking-widest text-gray-400 uppercase">Légal</p>
 
         <ul class="mt-6 space-y-4">
           <li>
             <a
               href="#"
               title=""
-              class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
+              class="hover:text-corail focus:text-corail flex text-base text-black transition-all duration-200">
               Customer Support
             </a>
           </li>
@@ -149,7 +160,7 @@
             <a
               href="#"
               title=""
-              class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
+              class="hover:text-corail focus:text-corail flex text-base text-black transition-all duration-200">
               Delivery Details
             </a>
           </li>
@@ -158,7 +169,7 @@
             <a
               href="#"
               title=""
-              class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
+              class="hover:text-corail focus:text-corail flex text-base text-black transition-all duration-200">
               Terms & Conditions
             </a>
           </li>
@@ -167,7 +178,7 @@
             <a
               href="#"
               title=""
-              class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
+              class="hover:text-corail focus:text-corail flex text-base text-black transition-all duration-200">
               Privacy Policy
             </a>
           </li>
@@ -176,34 +187,115 @@
 
       <div class="col-span-2 md:col-span-1 lg:col-span-2 lg:pl-8">
         <p class="text-sm font-semibold tracking-widest text-gray-400 uppercase">
-          Subscribe to newsletter
+          S'inscrire à la newsletter
         </p>
 
-        <form action="#" method="POST" class="mt-6">
+        <form id="newsletter-form" class="mt-6">
           <div>
             <label for="email" class="sr-only">Email</label>
             <input
               type="email"
               name="email"
               id="email"
-              placeholder="Enter your email"
-              class="block w-full rounded-md border border-gray-200 bg-white p-4 text-black placeholder-gray-500 caret-blue-600 transition-all duration-200 focus:border-blue-600 focus:outline-none"
+              placeholder="Entrez votre email"
+              required
+              class="caret-corail focus:border-corail block w-full rounded-md border border-gray-200 bg-white p-4 text-black placeholder-gray-500 transition-all duration-200 focus:outline-none"
             />
           </div>
 
           <button
             type="submit"
-            class="mt-3 inline-flex items-center justify-center rounded-md bg-blue-600 px-6 py-4 font-semibold text-white transition-all duration-200 hover:bg-blue-700 focus:bg-blue-700"
-            >Subscribe</button
-          >
+            id="newsletter-submit"
+            class="bg-atoll hover:bg-corail focus:bg-corail mt-3 inline-flex items-center justify-center rounded-md px-6 py-4 font-semibold text-white transition-all duration-200">
+            <span id="submit-text">S'inscrire</span>
+            <span id="loading-spinner" class="hidden ml-2">
+              <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </span>
+          </button>
+          <p id="form-message" class="mt-2 text-sm hidden"></p>
         </form>
+
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('newsletter-form');
+            const submitBtn = document.getElementById('newsletter-submit');
+            const submitText = document.getElementById('submit-text');
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const messageEl = document.getElementById('form-message');
+            const emailInput = document.getElementById('email');
+
+            form.addEventListener('submit', async function(e) {
+              e.preventDefault();
+              
+              const email = emailInput.value.trim();
+              
+              if (!email) {
+                showMessage('Veuillez entrer une adresse email', 'error');
+                return;
+              }
+
+              setLoading(true);
+              hideMessage();
+
+              try {
+                const response = await fetch('/api/subscribe', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ email })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                  showMessage('Inscription réussie ! Merci.', 'success');
+                  form.reset();
+                } else {
+                  showMessage(data.error || 'Une erreur est survenue', 'error');
+                }
+              } catch {
+                showMessage('Erreur de connexion. Veuillez réessayer.', 'error');
+              } finally {
+                setLoading(false);
+              }
+            });
+
+            function setLoading(loading) {
+              submitBtn.disabled = loading;
+              if (loading) {
+                submitText.textContent = 'Envoi...';
+                loadingSpinner.classList.remove('hidden');
+              } else {
+                submitText.textContent = "S'inscrire";
+                loadingSpinner.classList.add('hidden');
+              }
+            }
+
+            function showMessage(text, type) {
+              messageEl.textContent = text;
+              messageEl.className = 'mt-2 text-sm ' + (type === 'success' ? 'text-green-600' : 'text-red-600');
+              messageEl.classList.remove('hidden');
+            }
+
+            function hideMessage() {
+              messageEl.classList.add('hidden');
+            }
+          });
+        </script>
       </div>
     </div>
 
     <hr class="mt-16 mb-10 border-gray-200" />
 
-    <p class="text-center text-sm text-gray-600">
-      © Copyright 2021, All Rights Reserved by Postcraft
+    <p class="text-atoll text-center text-sm">
+      {`© Copyright ${new Date().getFullYear()} - `}
+      Créé par <a
+        href="https://huitquatre.com"
+        class="text-lavande hover:text-blue-700 focus:text-blue-700">
+        huitquatre</a
+      >. Tous droits réservés.
     </p>
   </div>
 </section>

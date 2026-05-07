@@ -1,0 +1,43 @@
+---
+import { storyblokEditable } from "@storyblok/astro";
+const { blok } = Astro.props;
+---
+
+<section
+  class={`testimonial texture-${blok.texture} relative z-1 py-20 lg:py-32`}
+  {...storyblokEditable(blok)}>
+  <div class="mx-auto w-[calc(100%-2.5rem)] max-w-lg md:max-w-3xl lg:w-[calc(100%-4rem)]">
+    <div class="testimonial__block-wrapper mb-8 lg:mb-12">
+      <blockquote class="text-center text-2xl leading-snug lg:text-3xl lg:leading-snug">
+        {blok.quote}
+      </blockquote>
+
+      <svg
+        class="icon inline-block h-24 w-24 shrink-0 fill-current leading-none opacity-10"
+        aria-hidden="true"
+        viewBox="0 0 64 64">
+        <polygon points="2 36 17 2 26 2 15 36 26 36 26 62 2 62 2 36"> </polygon>
+        <polygon points="38 36 53 2 62 2 51 36 62 36 62 62 38 62 38 36"> </polygon>
+      </svg>
+    </div>
+
+    <div class="text-center">
+      <p class="letter-spacing-md leading-tight uppercase"><strong>{blok.name}</strong></p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonial__block-wrapper {
+    position: relative;
+  }
+  .testimonial__block-wrapper blockquote {
+    position: relative;
+    z-index: 1;
+  }
+  .testimonial__block-wrapper .icon {
+    position: absolute;
+    top: -0.5em;
+    left: -0.5em;
+  }
+</style>
