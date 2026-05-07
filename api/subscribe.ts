@@ -44,7 +44,7 @@ export const POST: APIRoute = async ({ request }) => {
     const contactResponse = await fetch("https://api.mailjet.com/v3/REST/contact", {
       method: "POST",
       headers,
-      body: JSON.stringify({ Email: email })
+      body: JSON.stringify({ Email: email, Name: "New Contact", IsExcludedFromCampaigns: true })
     });
 
     let contactId: number | undefined;
