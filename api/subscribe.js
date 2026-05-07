@@ -1,6 +1,6 @@
-const MAILJET_API_KEY = import.meta.env.MAILJET_API_KEY;
-const MAILJET_API_SECRET = import.meta.env.MAILJET_API_SECRET;
-const MAILJET_LIST_ID = import.meta.env.MAILJET_LIST_ID;
+const MAILJET_API_KEY = process.env.MAILJET_API_KEY;
+const MAILJET_API_SECRET = process.env.MAILJET_API_SECRET;
+const MAILJET_LIST_ID = process.env.MAILJET_LIST_ID;
 
 function validateEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
