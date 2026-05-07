@@ -8,8 +8,9 @@ function validateEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-export const POST: APIRoute = async ({ request }) => {
-  if (!MAILJET_API_KEY || !MAILJET_API_SECRET || !MAILJET_LIST_ID) {
+export default {
+  async fetch(request: Request) {
+    if (!MAILJET_API_KEY || !MAILJET_API_SECRET || !MAILJET_LIST_ID) {
     return new Response(JSON.stringify({ error: "Server configuration error" }), {
       status: 500,
       headers: { "Content-Type": "application/json" }
@@ -106,4 +107,4 @@ export const POST: APIRoute = async ({ request }) => {
       headers: { "Content-Type": "application/json" }
     });
   }
-};
+} 
