@@ -18,7 +18,8 @@ export async function getStaticPaths() {
   const { data } = await sbApi.get("cdn/stories", {
     version,
     token: import.meta.env.STORYBLOK_TOKEN,
-    per_page: 100
+    per_page: 100,
+    resolve_links: "url"
   });
 
   // Remove global story global (for configuration purposes only)
