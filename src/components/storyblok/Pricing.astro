@@ -6,19 +6,71 @@ import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRendere
 const { blok } = Astro.props;
 ---
 
-<section class=`pricing relative pb-18 lg:pb-38` {...storyblokEditable(blok)}>
-  <div class="intro text-container-big py-12 lg:py-24">
-    <RichTextRenderer
-      content={blok.intro}
-      resolver={(blok) => {
-        return {
-          component: StoryblokComponent,
-          props: { blok }
-        };
-      }}
-    />
-  </div>
-  <div class="pricing-cards">
-    {blok.cards.map((card) => <div class="pricing-card text-container-small"></div>)}
+<section class=`pricing relative pb-8` {...storyblokEditable(blok)}>
+  <div class="pricing-cards px-8">
+    {
+      blok.cards.map((card) => (
+        <div
+          class={`pricing-card bg-${card.color} flex ${blok.cards.length > 1 ? "flex-col " : "flex-col md:flex-row"} items-center justify-center`}>
+          <div class="h-14 self-end pb-8">
+            {card.tag && (
+              <span class="bg-atoll/10 inline-flex items-center rounded-full p-1 text-[0.9375rem]">
+                <i class="px-2 py-0 not-italic">{card.tag}</i>
+              </span>
+            )}
+          </div>
+
+          <div class={`price ${blok.cards.length > 1 ? "w-full" : "w-full md:w-1/3"} tabular-nums`}>
+            <p class="text-7xl">{card.price} €</p>
+            <p class="px-2">{card.infoprice}</p>
+            {card.discount && (
+              <p class="pt-2">
+                <span class="bg-atoll/10 inline-flex items-center rounded-full p-1 text-[0.9375rem]">
+                  <i class="px-2 py-0 not-italic">{card.discount}</i>
+                </span>
+              </p>
+            )}
+          </div>
+          <div class="description text-container-small-wide">
+            <RichTextRenderer
+              content={card.description}
+              resolver={(blok) => {
+                return {
+                  component: StoryblokComponent,
+                  props: { blok }
+                };
+              }}
+            />
+          </div>
+        </div>
+      ))
+    }
   </div>
 </section>
+
+<style>
+  .description :global(h2),
+  .description :global(h3) {
+    font-size: 2em;
+  }
+  .pricing-cards {
+    display: flex;
+    gap: 2em;
+    flex-wrap: wrap;
+  }
+  .pricing-cards > * {
+    flex-grow: 1;
+    flex-basis: calc((60rem - 100%) * 999);
+  }
+  .pricing-cards > :nth-last-child(n + 4),
+  .pricing-cards > :nth-last-child(n + 4) ~ * {
+    flex-basis: 100%;
+  }
+  .pricing-card {
+    border-radius: 2em;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1em;
+    display: flex;
+  }
+</style>

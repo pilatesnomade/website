@@ -77,21 +77,72 @@
     @apply text-marron bg-white;
   }
 
+  .bg-corail {
+    background-color: #ffa187;
+    color: var(--color-atoll);
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: var(--color-marron);
+    }
+  }
+
   .corail {
     color: #ffa187;
   }
+
+  .bg-marron {
+    background-color: var(--color-marron);
+    color: white;
+  }
+
   .marron {
     color: #66301a;
   }
+
+  .bg-jaune {
+    background-color: #ffd88a;
+    color: var(--color-marron);
+  }
+
   .jaune {
     color: #ffd88a;
   }
+
+  .bg-atoll {
+    background-color: #0c6277;
+    color: white;
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: var(--color-jaune);
+    }
+  }
+
   .atoll {
     color: #0c6277;
   }
+
+  .bg-lavande {
+    background-color: #a972df;
+    color: white;
+  }
+
   .lavande {
     color: #a972df;
   }
+
+  .bg-pastel {
+    background-color: #f8e7ff;
+    color: var(--color-marron);
+  }
+
   .pastel {
     color: #f8e7ff;
   }
@@ -160,6 +211,10 @@
     background-size: cover;
     fill: var(--color-marron);
   }
+  .texture-transparent {
+    color: var(--color-marron);
+    fill: var(--color-marron);
+  }
   .text-container-big {
     @apply prose-base md:prose-2xl lg:prose-headings:text-7xl xl:prose-p:text-5xl mx-auto w-full max-w-screen px-8 lg:px-16 2xl:max-w-screen-2xl;
     ul,
@@ -176,6 +231,13 @@
   }
   .text-container-small {
     @apply prose-base md:prose-base lg:prose-headings:text-xl xl:prose-p:text-xl mx-auto w-full max-w-screen px-8 lg:px-16 2xl:max-w-screen-2xl;
+    ul,
+    ol {
+      @apply list-inside list-disc;
+    }
+  }
+  .text-container-small-wide {
+    @apply prose-base md:prose-base lg:prose-headings:text-xl xl:prose-p:text-xl mx-auto w-full max-w-screen px-1 lg:px-2 2xl:max-w-screen-2xl;
     ul,
     ol {
       @apply list-inside list-disc;
