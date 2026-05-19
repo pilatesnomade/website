@@ -59,6 +59,7 @@ export default defineConfig({
       splitLayout: "SplitLayout",
       faq: "Faq",
       pricing: "Pricing",
+      planning: "Planning",
     },
     accessToken: import.meta.env.STORYBLOK_TOKEN || "your_token_here",
     enableFallbackComponent: true,

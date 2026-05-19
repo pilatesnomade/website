@@ -1,6 +1,9 @@
 ---
 import { Image } from "astro:assets";
 import { storyblokEditable } from "@storyblok/astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro";
+
 const { blok } = Astro.props;
 ---
 
@@ -24,6 +27,19 @@ const { blok } = Astro.props;
                 <div class="cards-stack-card__start">
                   <span class="cards-stack-card__number">{card?.title}</span>
                 </div>
+                {card.description && (
+                  <div class={`prose text-inherit`}>
+                    <RichTextRenderer
+                      content={card.description}
+                      resolver={(blok) => {
+                        return {
+                          component: StoryblokComponent,
+                          props: { blok }
+                        };
+                      }}
+                    />
+                  </div>
+                )}
                 <div class="cards-stack-card__end">
                   <Image
                     src={card.image?.filename}

@@ -48,6 +48,9 @@
   --color-atoll: #0c6277;
   --color-lavande: #a972df;
   --color-pastel: #f8e7ff;
+
+  --spacing-section: 80px;
+  --spacing-gutter: 24px;
 }
 
 @layer base {

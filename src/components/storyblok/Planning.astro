@@ -1,0 +1,52 @@
+---
+import { storyblokEditable } from "@storyblok/astro";
+
+const days = ["LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI"];
+
+const { blok } = Astro.props;
+
+const classes = [blok.lundi, blok.mardi, blok.mercredi, blok.jeudi, blok.vendredi];
+---
+
+<section class="planning p-4 md:p-8" {...storyblokEditable(blok)}>
+  <div class="mx-auto grid max-w-400 grid-cols-1 gap-8 xl:grid-cols-5">
+    {
+      days.map((day, index) => (
+        <div class="gap-stack-md flex flex-col">
+          <div class="border-outline mb-4 border-b pb-4">
+            <p class="text-atoll text-3xl">{day}</p>
+          </div>
+          <div class="flex flex-col gap-4">
+            {classes[index].map((creneau) => (
+              <div class="bg-jaune rounded-xl p-4 transition-all duration-300 hover:shadow-sm">
+                <span class="horaires">{creneau.time}</span>
+                <h3 class="cours">{creneau.name}</h3>
+                <p class="coach">{creneau.coach}</p>
+                {creneau.niveau && (
+                  <div class="mt-2 flex justify-end-safe">
+                    <span class="bg-primary/15 rounded-full px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase">
+                      {creneau.niveau}
+                    </span>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  @reference "../../styles/global.css";
+  .horaires {
+    @apply text-2xl font-bold;
+  }
+  .cours {
+    @apply mt-1 text-4xl;
+  }
+  .coach {
+    @apply text-lg;
+  }
+</style>
