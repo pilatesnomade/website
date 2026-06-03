@@ -1,9 +1,15 @@
 ---
 const { blok } = Astro.props;
+let href;
+if (blok.url.story) {
+  href = `/${blok.url.story.full_slug === "home" ? "" : blok.url.story.full_slug}`;
+} else {
+  href = blok.url.url;
+}
 ---
 
 <a
-  href={`/${blok.url.story.full_slug === "home" ? "" : blok.url.story.full_slug}`}
+  href={href}
   data-btn-hover=""
   class="btnPilates mx-auto"
   soft={blok.variant === "soft" ? true : undefined}

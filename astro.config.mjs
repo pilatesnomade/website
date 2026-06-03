@@ -60,6 +60,7 @@ export default defineConfig({
       faq: "Faq",
       pricing: "Pricing",
       planning: "Planning",
+      contact: "Contact",
     },
     accessToken: import.meta.env.STORYBLOK_TOKEN || "your_token_here",
     enableFallbackComponent: true,

@@ -1,5 +1,6 @@
 ---
 import { storyblokEditable } from "@storyblok/astro";
+import Button from "./Button.astro";
 
 const days = ["LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI"];
 
@@ -9,7 +10,7 @@ const classes = [blok.lundi, blok.mardi, blok.mercredi, blok.jeudi, blok.vendred
 ---
 
 <section class="planning p-4 md:p-8" {...storyblokEditable(blok)}>
-  <div class="mx-auto grid max-w-400 grid-cols-1 gap-8 xl:grid-cols-5">
+  <div class="mx-auto grid max-w-400 grid-cols-1 gap-8 xl:grid-cols-5 xl:gap-4">
     {
       days.map((day, index) => (
         <div class="gap-stack-md flex flex-col">
@@ -22,13 +23,39 @@ const classes = [blok.lundi, blok.mardi, blok.mercredi, blok.jeudi, blok.vendred
                 <span class="horaires">{creneau.time}</span>
                 <h3 class="cours">{creneau.name}</h3>
                 <p class="coach">{creneau.coach}</p>
-                {creneau.niveau && (
-                  <div class="mt-2 flex justify-end-safe">
+
+                <div class="mt-2 flex items-center justify-between">
+                  {creneau.resa && (
+                    <div>
+                      <a
+                        href={creneau.resa}
+                        data-btn-hover=""
+                        class="btnPilates mx-auto"
+                        invert="true">
+                        <div class="btn__bg" />
+                        <div class="btn__circle-wrap">
+                          <div class="btn__circle">
+                            <div class="before__100" />
+                          </div>
+                        </div>
+                        <div class="btn__text">
+                          <p class="btn-text-p">Réserver</p>
+                        </div>
+                      </a>
+                    </div>
+                  )}
+                  {!creneau.resa && (
+                    <span class="rounded-full bg-gray-300/50 px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase">
+                      Complet
+                    </span>
+                  )}
+
+                  {creneau.niveau && (
                     <span class="bg-primary/15 rounded-full px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase">
                       {creneau.niveau}
                     </span>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -37,6 +64,198 @@ const classes = [blok.lundi, blok.mardi, blok.mercredi, blok.jeudi, blok.vendred
     }
   </div>
 </section>
+
+<style>
+  .btnPilates {
+    cursor: pointer;
+    border-radius: 1em;
+    border-radius: calc(var(--btn-height) * 0.5);
+    grid-template-rows: auto auto;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-columns: 1fr;
+    justify-content: center;
+    align-items: center;
+    height: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
+    text-decoration: none;
+    display: flex;
+    position: relative;
+    width: fit-content;
+  }
+
+  .btn__text {
+    color: var(--color-white);
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+    position: relative;
+    transition: color 0.7s cubic-bezier(0.625, 0.05, 0, 1);
+  }
+
+  .btn-text-p {
+    color: currentColor;
+    white-space: nowrap;
+    margin-block: 0;
+    padding-bottom: 0.05em;
+    font-size: 1em;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .btn__bg {
+    background-color: var(--color-lavande);
+    border-radius: 1.5em;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .btn__image {
+    border-radius: 50%;
+    width: 2.25em;
+    height: 2.25em;
+    margin-left: -0.75em;
+    margin-right: 0.5em;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .img__founder {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .btn__circle-wrap {
+    border-radius: 1.5em;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+
+  .btn__circle {
+    pointer-events: none;
+    background-color: var(--color-atoll);
+    border-radius: 50%;
+    width: 100%;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transition:
+      transform 0.7s cubic-bezier(0.625, 0.05, 0, 1),
+      background-color 0.4s cubic-bezier(0.625, 0.05, 0, 1);
+    transform: translate(-50%, -50%) scale(0) rotate(0.001deg);
+    background-color: var(--color-atoll);
+  }
+
+  .before__100 {
+    padding-top: 100%;
+    display: block;
+  }
+
+  .btnPilates .btn__text {
+    transition: color 0.7s cubic-bezier(0.625, 0.05, 0, 1);
+  }
+
+  .btnPilates:hover .btn__circle {
+    transform: translate(-50%, -50%) scale(1) rotate(0.001deg);
+  }
+
+  /* SOFT VARIANT */
+  .btnPilates[soft] .btn__text {
+    color: var(--color-marron);
+  }
+
+  .btnPilates[soft] .btn__bg {
+    background-color: var(--color-pastel);
+  }
+
+  .btnPilates[soft] .btn__circle {
+    background-color: var(--color-jaune);
+  }
+  /* INVERT VARIANT */
+  .btnPilates[invert] .btn__text {
+    color: var(--color-white);
+  }
+
+  .btnPilates[invert] .btn__bg {
+    background-color: var(--color-atoll);
+  }
+
+  .btnPilates[invert] .btn__circle {
+    background-color: var(--color-lavande);
+  }
+  /* ACCENT VARIANT */
+  .btnPilates[accent] .btn__text {
+    color: var(--color-marron);
+  }
+
+  .btnPilates[accent] .btn__bg {
+    background-color: var(--color-jaune);
+  }
+
+  .btnPilates[accent] .btn__circle {
+    background-color: var(--color-corail);
+  }
+</style>
+
+<script>
+  function initDirectionalButtonHover() {
+    // Button hover animation
+    document.querySelectorAll("[data-btn-hover]").forEach((button) => {
+      button.addEventListener("mouseenter", handleHover);
+      button.addEventListener("mouseleave", handleHover);
+    });
+
+    function handleHover(event) {
+      const button = event.currentTarget;
+      const buttonRect = button.getBoundingClientRect();
+
+      // Get the button's dimensions and center
+      const buttonWidth = buttonRect.width;
+      const buttonHeight = buttonRect.height;
+      const buttonCenterX = buttonRect.left + buttonWidth / 2;
+      const buttonCenterY = buttonRect.top + buttonHeight / 2;
+
+      // Calculate mouse position
+      const mouseX = event.clientX;
+      const mouseY = event.clientY;
+
+      // Offset from the top-left corner in percentage
+      const offsetXFromLeft = ((mouseX - buttonRect.left) / buttonWidth) * 100;
+      const offsetYFromTop = ((mouseY - buttonRect.top) / buttonHeight) * 100;
+
+      // Offset from the center in percentage
+      let offsetXFromCenter = ((mouseX - buttonCenterX) / (buttonWidth / 2)) * 50;
+
+      // Convert to absolute values
+      offsetXFromCenter = Math.abs(offsetXFromCenter);
+
+      // Update position and size of .btn__circle
+      const circle = button.querySelector(".btn__circle");
+      if (circle) {
+        circle.style.left = `${offsetXFromLeft.toFixed(1)}%`;
+        circle.style.top = `${offsetYFromTop.toFixed(1)}%`;
+        circle.style.width = `${115 + offsetXFromCenter.toFixed(1) * 2}%`;
+      }
+    }
+  }
+
+  // Initialize Directional Button Hover
+  document.addEventListener("DOMContentLoaded", function () {
+    initDirectionalButtonHover();
+  });
+</script>
 
 <style>
   @reference "../../styles/global.css";
