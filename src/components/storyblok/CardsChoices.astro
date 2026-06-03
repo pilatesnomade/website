@@ -24,11 +24,11 @@ const { blok } = Astro.props;
               data-stacking-card=""
               class="cards-stack__item is--wide">
               <div data-stacking-card-target="" class={`cards-stack-card is--wide ${card.color}`}>
-                <div class="cards-stack-card__start">
+                <div class="cards-stack-card__start pb-8">
                   <span class="cards-stack-card__number">{card?.title}</span>
                 </div>
                 {card.description && (
-                  <div class={`prose text-inherit`}>
+                  <div class={`text-inherit`}>
                     <RichTextRenderer
                       content={card.description}
                       resolver={(blok) => {
@@ -86,7 +86,7 @@ const { blok } = Astro.props;
     flex: none;
     width: 100%;
     max-width: 25em;
-    position: sticky;
+    /* position: sticky; */
     top: 5em;
   }
 
@@ -95,7 +95,6 @@ const { blok } = Astro.props;
   }
 
   .cards-stack-card {
-    aspect-ratio: 2 / 3;
     background-color: var(--color-pastel);
     border-radius: 2em;
     flex-flow: column;
@@ -103,6 +102,7 @@ const { blok } = Astro.props;
     width: 100%;
     padding: 2.5em;
     display: flex;
+    max-width: 60em;
   }
 
   .cards-stack-card.corail {
@@ -136,7 +136,6 @@ const { blok } = Astro.props;
   }
 
   .cards-stack-card.is--wide {
-    aspect-ratio: 5 / 3;
   }
 
   .cards-stack-card__number {
