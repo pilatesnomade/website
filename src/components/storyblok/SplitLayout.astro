@@ -12,7 +12,7 @@ const focalPointX = (parseInt(posX) / width) * 100;
 const focalPointY = (parseInt(posY) / height) * 100;
 ---
 
-<section class="split-layout" {...storyblokEditable(blok)}>
+<section class={`split-layout ${blok.margin ? "mt-16" : ""}`} {...storyblokEditable(blok)}>
   <div class="image">
     <Image
       src={blok.image?.filename}
@@ -38,11 +38,14 @@ const focalPointY = (parseInt(posY) / height) * 100;
 
 <script>
   function setImageHeight() {
-    const contentHeight = document.querySelector(".content")?.clientHeight;
-    const image = document.querySelector(".image");
-    if (image) {
-      image.style.height = `${contentHeight}px`;
-    }
+    const splitSections = document.querySelectorAll(".split-layout");
+    splitSections.forEach((section) => {
+      const contentHeight = section.querySelector(".content > div")?.clientHeight;
+      const image = section.querySelector(".image");
+      if (image) {
+        image.style.height = `calc(${contentHeight}px + 8rem)`;
+      }
+    });
   }
 
   // Run on initial load

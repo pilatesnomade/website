@@ -66,6 +66,7 @@
   .breathing {
     font-family: "Breathing";
     vertical-align: middle;
+    @apply text-2xl md:text-4xl lg:text-4xl xl:text-5xl;
   }
 
   .big-breathing {
@@ -201,6 +202,14 @@
     color: white;
     background-size: cover;
     fill: white;
+    & h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: var(--color-jaune);
+    }
   }
 
   .texture-lavandeBlobLight {
@@ -221,7 +230,7 @@
     fill: var(--color-marron);
   }
   .text-container-big {
-    @apply prose-base md:prose-2xl lg:prose-headings:text-7xl xl:prose-p:text-5xl mx-auto w-full max-w-screen px-8 lg:px-16 2xl:max-w-screen-2xl;
+    @apply prose-headings:mt-4 prose-base md:prose-2xl lg:prose-headings:text-7xl xl:prose-p:text-5xl mx-auto w-full max-w-screen px-8 lg:px-16 2xl:max-w-screen-2xl;
     ul,
     ol {
       @apply list-inside list-disc;
@@ -249,13 +258,19 @@
     }
   }
 
-  .split-layout:nth-of-type(odd) {
+  /* .split-layout:nth-of-type(odd) {
     grid-template-columns: 40% 1fr;
     .image {
       order: 0;
     }
-  }
-  .split-layout:nth-of-type(even) {
+  } */
+  /* .split-layout:nth-of-type(even) {
+    grid-template-columns: 1fr 40%;
+    .image {
+      order: 1;
+    }
+  } */
+  .split-layout {
     grid-template-columns: 1fr 40%;
     .image {
       order: 1;

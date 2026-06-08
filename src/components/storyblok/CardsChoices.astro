@@ -20,7 +20,7 @@ const { blok } = Astro.props;
         {
           blok.cards?.map((card) => (
             <a
-              href={`/${card.url.story.full_slug === "home" ? "" : card.url.story.full_slug}`}
+              href={`/${card.url?.story?.full_slug === "home" ? "" : card.url?.story?.full_slug || "#"}`}
               data-stacking-card=""
               class="cards-stack__item is--wide">
               <div data-stacking-card-target="" class={`cards-stack-card is--wide ${card.color}`}>
@@ -28,7 +28,7 @@ const { blok } = Astro.props;
                   <span class="cards-stack-card__number">{card?.title}</span>
                 </div>
                 {card.description && (
-                  <div class={`text-inherit`}>
+                  <div class={`mb-8 text-inherit`}>
                     <RichTextRenderer
                       content={card.description}
                       resolver={(blok) => {

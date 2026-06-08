@@ -7,8 +7,8 @@ import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRendere
 const { blok } = Astro.props;
 ---
 
-<section class=`intro texture-${blok.texture} relative ${blok.sticker ? "pb-18 lg:pb-38" : ""}` {...storyblokEditable(blok)}>
-  <div class="py-8">
+<section class=`intro texture-${blok.texture} relative ${blok.sticker ? "pt-8 pb-18 lg:pb-38" : "py-8"}` {...storyblokEditable(blok)}>
+  <div>
     <div class="text-container-big">
       <RichTextRenderer
         content={blok.content}
