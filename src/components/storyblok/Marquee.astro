@@ -10,7 +10,7 @@ const { blok } = Astro.props;
   data-radial-text-marquee-radius="8"
   data-radial-text-marquee-spacer="-"
   data-radial-text-marquee-spacer-color=`var(--color-${blok.spacerColor || "jaune"})`
-  class=`radial-text-marquee overflow-x-hidden my-16 ${blok.textColor || 'marron'}`
+  class=`radial-text-marquee mt-16 mb-24 ${blok.textColor || 'marron'}`
   {...storyblokEditable(blok)}>
   <div data-radial-text-marquee-text="" class="radial-text-marquee__text">
     {blok.text}
@@ -28,7 +28,8 @@ const { blok } = Astro.props;
     letter-spacing: -0.04em;
     white-space: nowrap;
     user-select: none;
-    font-size: clamp(4.5em, 10vw, 10em);
+    /* font-size: clamp(4.5em, 10vw, 10em); */
+    font-size: clamp(4.5em, 7vw, 10em);
   }
 </style>
 
