@@ -19,15 +19,19 @@ const { blok } = Astro.props;
   />
   <div class="overlay"></div>
   <div class="text-container-big z-10 max-w-[60ch] px-4 pb-16 text-left lg:px-12">
-    <RichTextRenderer
-      content={blok.content}
-      resolver={(blok) => {
-        return {
-          component: StoryblokComponent,
-          props: { blok }
-        };
-      }}
-    />
+    {
+      blok.content && (
+        <RichTextRenderer
+          content={blok.content}
+          resolver={(blok) => {
+            return {
+              component: StoryblokComponent,
+              props: { blok }
+            };
+          }}
+        />
+      )
+    }
   </div>
 </section>
 

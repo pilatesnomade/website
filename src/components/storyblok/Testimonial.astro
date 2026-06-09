@@ -11,15 +11,19 @@ const { blok } = Astro.props;
   <div class="mx-auto max-w-[127ch] px-4">
     <div class="testimonial__block-wrapper mb-8 lg:mb-12">
       <blockquote class="text-center text-2xl leading-snug lg:text-3xl lg:leading-snug">
-        <RichTextRenderer
-          content={blok.quote}
-          resolver={(blok) => {
-            return {
-              component: StoryblokComponent,
-              props: { blok }
-            };
-          }}
-        />
+        {
+          blok.quote && (
+            <RichTextRenderer
+              content={blok.quote}
+              resolver={(blok) => {
+                return {
+                  component: StoryblokComponent,
+                  props: { blok }
+                };
+              }}
+            />
+          )
+        }
       </blockquote>
 
       <svg

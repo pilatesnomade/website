@@ -83,15 +83,17 @@ const json = `${JSON.stringify(jsondata, null, 2)}`;
               <div class="accordion-css__item-bottom-wrap">
                 <div class="accordion-css__item-bottom-content">
                   <div class="accordion-css__item-p text-container-small">
-                    <RichTextRenderer
-                      content={qa.response}
-                      resolver={(blok) => {
-                        return {
-                          component: StoryblokComponent,
-                          props: { blok }
-                        };
-                      }}
-                    />
+                    {qa.response && (
+                      <RichTextRenderer
+                        content={qa.response}
+                        resolver={(blok) => {
+                          return {
+                            component: StoryblokComponent,
+                            props: { blok }
+                          };
+                        }}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
