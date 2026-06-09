@@ -1,15 +1,25 @@
 ---
 import { storyblokEditable } from "@storyblok/astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro";
 const { blok } = Astro.props;
 ---
 
 <section
   class={`testimonial texture-${blok.texture} relative z-1 py-20 lg:py-32`}
   {...storyblokEditable(blok)}>
-  <div class="mx-auto w-[calc(100%-2.5rem)] max-w-lg md:max-w-3xl lg:w-[calc(100%-4rem)]">
+  <div class="mx-auto max-w-[127ch] px-4">
     <div class="testimonial__block-wrapper mb-8 lg:mb-12">
       <blockquote class="text-center text-2xl leading-snug lg:text-3xl lg:leading-snug">
-        {blok.quote}
+        <RichTextRenderer
+          content={blok.quote}
+          resolver={(blok) => {
+            return {
+              component: StoryblokComponent,
+              props: { blok }
+            };
+          }}
+        />
       </blockquote>
 
       <svg
