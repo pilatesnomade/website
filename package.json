@@ -21,6 +21,7 @@
     "gsap": "^3.14.2",
     "html-to-text": "^10.0.0",
     "lenis": "^1.3.21",
+    "resend": "^6.12.4",
     "storyblok-rich-text-astro-renderer": "^2.10.0",
     "tailwindcss": "^4.2.2"
   },

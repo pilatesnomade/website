@@ -25,13 +25,16 @@ const classes = [blok.lundi, blok.mardi, blok.mercredi, blok.jeudi, blok.vendred
                 <p class="coach">{creneau.coach}</p>
 
                 <div class="mt-2 flex items-center justify-between">
-                  {creneau.resa && (
+                  {creneau.opentoresa && (
                     <div>
-                      <a
-                        href={creneau.resa}
+                      <button
+                        type="button"
                         data-btn-hover=""
-                        class="btnPilates mx-auto"
-                        invert="true">
+                        class="btnPilates reserve-btn mx-auto"
+                        invert="true"
+                        data-creneau-day={day}
+                        data-creneau-time={creneau.time}
+                        data-creneau-cours={creneau.name}>
                         <div class="btn__bg" />
                         <div class="btn__circle-wrap">
                           <div class="btn__circle">
@@ -41,14 +44,14 @@ const classes = [blok.lundi, blok.mardi, blok.mercredi, blok.jeudi, blok.vendred
                         <div class="btn__text">
                           <p class="btn-text-p">Réserver</p>
                         </div>
-                      </a>
+                      </button>
                     </div>
                   )}
-                  {/* {!creneau.resa && (
-                    <span class="rounded-full bg-gray-300/50 px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase">
+                  {!creneau.opentoresa && (
+                    <span class="rounded-full bg-gray-300/50 px-2 py-0.5 text-[20px] font-bold tracking-wider uppercase">
                       Complet
                     </span>
-                  )} */}
+                  )}
 
                   {creneau.niveau && (
                     <span class="bg-primary/15 rounded-full px-2 py-0.5 text-[20px] font-bold tracking-wider uppercase">
@@ -64,6 +67,66 @@ const classes = [blok.lundi, blok.mardi, blok.mercredi, blok.jeudi, blok.vendred
     }
   </div>
 </section>
+
+<!-- Reservation Modal Overlay -->
+<div id="reserve-modal" class="reserve-modal hidden">
+  <div class="reserve-modal-backdrop" id="reserve-modal-backdrop"></div>
+  <div class="reserve-modal-content">
+    <button type="button" class="reserve-modal-close" id="reserve-modal-close">&times;</button>
+    <h2 class="text-atoll font-heading mb-6 text-3xl">Réserver ce créneau</h2>
+    <p class="reserve-creneau-info mb-4 text-lg"></p>
+    <form id="reserve-form" class="space-y-4">
+      <div class="space-y-2">
+        <label for="reserve-name" class="text-base-900 font-display text-sm font-medium uppercase">
+          Nom*
+        </label>
+        <input
+          type="text"
+          id="reserve-name"
+          name="name"
+          class="border-base-200 bg-base-50 text-base-900 placeholder:text-base-400 focus:border-base-500 focus:ring-base-500 w-full rounded-lg border px-4 py-3 transition-all duration-200 focus:ring-1 focus:outline-none"
+          required
+        />
+      </div>
+      <div class="space-y-2">
+        <label for="reserve-email" class="text-base-900 font-display text-sm font-medium uppercase">
+          Email*
+        </label>
+        <input
+          type="email"
+          id="reserve-email"
+          name="email"
+          class="border-base-200 bg-base-50 text-base-900 placeholder:text-base-400 focus:border-base-500 focus:ring-base-500 w-full rounded-lg border px-4 py-3 transition-all duration-200 focus:ring-1 focus:outline-none"
+          required
+        />
+      </div>
+      <div class="space-y-2">
+        <label for="reserve-phone" class="text-base-900 font-display text-sm font-medium uppercase">
+          Téléphone*
+        </label>
+        <input
+          type="tel"
+          id="reserve-phone"
+          name="phone"
+          class="border-base-200 bg-base-50 text-base-900 placeholder:text-base-400 focus:border-base-500 focus:ring-base-500 w-full rounded-lg border px-4 py-3 transition-all duration-200 focus:ring-1 focus:outline-none"
+          required
+        />
+      </div>
+      <p id="reserve-form-status" class="min-h-[1.5rem] text-sm"></p>
+      <button type="submit" data-btn-hover="" class="btnPilates mx-auto">
+        <div class="btn__bg"></div>
+        <div class="btn__circle-wrap">
+          <div class="btn__circle">
+            <div class="before__100"></div>
+          </div>
+        </div>
+        <div class="btn__text">
+          <p class="btn-text-p">Envoyer</p>
+        </div>
+      </button>
+    </form>
+  </div>
+</div>
 
 <style>
   .btnPilates {
@@ -268,4 +331,125 @@ const classes = [blok.lundi, blok.mardi, blok.mercredi, blok.jeudi, blok.vendred
   .coach {
     @apply text-lg;
   }
+  .reserve-modal {
+    @apply fixed inset-0 z-50 flex items-center justify-center;
+  }
+  .reserve-modal-backdrop {
+    @apply bg-atoll/70 absolute inset-0;
+  }
+  .reserve-modal-content {
+    @apply relative mx-4 max-h-[90vh] w-full max-w-md overflow-y-auto rounded-xl bg-white p-8;
+  }
+  .reserve-modal-close {
+    @apply text-atoll hover:text-lavande absolute top-4 right-4 cursor-pointer border-none bg-transparent text-2xl font-bold;
+  }
+  #reserve-modal.hidden {
+    @apply hidden;
+  }
+  #reserve-modal:not(.hidden) {
+    @apply flex;
+  }
 </style>
+
+<script>
+  function openReserveModal(day, time, cours) {
+    const modal = document.getElementById("reserve-modal");
+    const infoEl = document.querySelector(".reserve-creneau-info");
+    const statusEl = document.getElementById("reserve-form-status");
+
+    if (infoEl) {
+      infoEl.textContent = `Créneau: ${day} à ${time} - ${cours}`;
+    }
+    if (statusEl) {
+      statusEl.textContent = "";
+    }
+    if (modal) {
+      modal.classList.remove("hidden");
+      modal.dataset.day = day;
+      modal.dataset.time = time;
+      modal.dataset.cours = cours;
+    }
+  }
+
+  function closeReserveModal() {
+    const modal = document.getElementById("reserve-modal");
+    if (modal) {
+      modal.classList.add("hidden");
+    }
+  }
+
+  function initReserveModal() {
+    document.querySelectorAll(".reserve-btn").forEach((btn) => {
+      btn.addEventListener("click", function (e) {
+        const day = this.dataset.creneauDay;
+        const time = this.dataset.creneauTime;
+        const cours = this.dataset.creneauCours;
+        openReserveModal(day, time, cours);
+      });
+    });
+
+    const closeBtn = document.getElementById("reserve-modal-close");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", closeReserveModal);
+    }
+
+    const backdrop = document.getElementById("reserve-modal-backdrop");
+    if (backdrop) {
+      backdrop.addEventListener("click", closeReserveModal);
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeReserveModal();
+      }
+    });
+
+    const form = document.getElementById("reserve-form");
+    if (form) {
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const statusEl = document.getElementById("reserve-form-status");
+        const modal = document.getElementById("reserve-modal");
+
+        const formData = new FormData(e.target);
+        const data = {
+          name: formData.get("name"),
+          email: formData.get("email"),
+          phone: formData.get("phone"),
+          day: modal.dataset.day,
+          time: modal.dataset.time,
+          cours: modal.dataset.cours
+        };
+
+        try {
+          const response = await fetch("/api/reserve", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+          });
+
+          const result = await response.json();
+
+          if (!response.ok) {
+            if (statusEl) {
+              statusEl.textContent = result.error || "Erreur lors de l'envoi";
+              statusEl.style.color = "#ef4444";
+            }
+            return;
+          }
+
+          window.location.href = "https://backoffice.bsport.io/login/customer?membership=4477";
+        } catch (err) {
+          if (statusEl) {
+            statusEl.textContent = "Erreur de connexion";
+            statusEl.style.color = "#ef4444";
+          }
+        }
+      });
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    initReserveModal();
+  });
+</script>
