@@ -12,6 +12,7 @@ async function sendEmail(data) {
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({}));
+    console.log("Email sending error:", error);
     return { error: error.message || "Failed to send email" };
   }
 
@@ -20,6 +21,7 @@ async function sendEmail(data) {
 
 export async function POST(request) {
   if (!RESEND_API_KEY) {
+    console.error("RESEND_API_KEY is not set");
     return new Response(JSON.stringify({ error: "Server configuration error" }), {
       status: 500,
       headers: { "Content-Type": "application/json" }
@@ -64,6 +66,7 @@ export async function POST(request) {
     });
 
     if (error) {
+      console.log("Email sending failed:", error);
       return new Response(JSON.stringify({ error }), {
         status: 500,
         headers: { "Content-Type": "application/json" }
@@ -75,6 +78,7 @@ export async function POST(request) {
       headers: { "Content-Type": "application/json" }
     });
   } catch (error) {
+    console.error("Internal server error:", error);
     return new Response(JSON.stringify({ error: error.message || "Internal server error" }), {
       status: 500,
       headers: { "Content-Type": "application/json" }
