@@ -16,7 +16,10 @@ async function sendEmail(data) {
     return { error: error.message || "Failed to send email" };
   }
 
-  return { data: await response.json() };
+  return new Response(JSON.stringify({ success: true, data }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" }
+    });
 }
 
 export async function POST(request) {
