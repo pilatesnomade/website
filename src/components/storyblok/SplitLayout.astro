@@ -4,24 +4,36 @@ import { storyblokEditable } from "@storyblok/astro";
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
 import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro";
 
+let focalPointX = 50;
+let focalPointY = 50;
+let currentwidth = 0;
+let currentheight = 0;
 const { blok } = Astro.props;
-const posX = blok.image?.focus.split(":")[0].split("x")[0] || "50";
-const posY = blok.image?.focus.split(":")[0].split("x")[1] || "50";
-const { width, height } = await inferRemoteSize(blok.image?.filename);
-const focalPointX = (parseInt(posX) / width) * 100;
-const focalPointY = (parseInt(posY) / height) * 100;
+if (blok.image.id) {
+  const posX = blok.image?.focus?.split(":")[0].split("x")[0] || "50";
+  const posY = blok.image?.focus?.split(":")[0].split("x")[1] || "50";
+  const { width, height } = await inferRemoteSize(blok.image?.filename);
+  currentwidth = width;
+  currentheight = height;
+  focalPointX = (parseInt(posX) / width) * 100;
+  focalPointY = (parseInt(posY) / height) * 100;
+}
 ---
 
 <section class={`split-layout ${blok.margin ? "mt-16" : ""}`} {...storyblokEditable(blok)}>
   <div class="image">
-    <Image
-      src={blok.image?.filename}
-      alt={blok.image?.alt}
-      width={width}
-      height={height}
-      layout="constrained"
-      class="focal h-full w-full object-cover"
-    />
+    {
+      blok.image.id && (
+        <Image
+          src={blok.image?.filename}
+          alt={blok.image?.alt}
+          width={currentwidth}
+          height={currentheight}
+          layout="constrained"
+          class="focal h-full w-full object-cover"
+        />
+      )
+    }
   </div>
   <div class="content text-container-base">
     <RichTextRenderer

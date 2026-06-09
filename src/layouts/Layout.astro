@@ -23,6 +23,7 @@ const { seo } = Astro.props;
     <Navigation />
 
     <main id="main-content">
+      <div class="cursor"></div>
       <slot />
     </main>
 
@@ -60,3 +61,56 @@ const { seo } = Astro.props;
     </script>
   </body>
 </html>
+
+<script>
+  import gsap from "gsap";
+
+  function initBasicCustomCursor() {
+    gsap.set(".cursor", { xPercent: -50, yPercent: -50 });
+
+    let xTo = gsap.quickTo(".cursor", "x", { duration: 0.6, ease: "power3" });
+    let yTo = gsap.quickTo(".cursor", "y", { duration: 0.6, ease: "power3" });
+
+    window.addEventListener("mousemove", (e) => {
+      xTo(e.clientX);
+      yTo(e.clientY);
+    });
+  }
+
+  // Initialize Basic Custom Cursor
+  document.addEventListener("DOMContentLoaded", () => {
+    initBasicCustomCursor();
+  });
+</script>
+
+<style>
+  .cursor {
+    z-index: 100;
+    background-color: var(--color-lavande);
+    border: 1px solid var(--color-lavande);
+    border-radius: 100em;
+    width: 1em;
+    height: 1em;
+    transition:
+      background-color 0.375s cubic-bezier(0.625, 0.05, 0, 1),
+      height 0.375s cubic-bezier(0.625, 0.05, 0, 1),
+      width 0.375s cubic-bezier(0.625, 0.05, 0, 1);
+    position: fixed;
+    inset: 0% auto auto 0%;
+    pointer-events: none;
+  }
+
+  body:has(a:hover) .cursor,
+  body:has(button:hover) .cursor,
+  body:has([data-cursor]:hover) .cursor {
+    width: 3em;
+    height: 3em;
+    background-color: color-mix(in srgb, var(--color-lavande), transparent 30%);
+  }
+
+  @media (hover: none) and (pointer: coarse) {
+    .cursor {
+      display: none;
+    }
+  }
+</style>
