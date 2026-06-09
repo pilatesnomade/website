@@ -3,15 +3,15 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const resend = new Resend(RESEND_API_KEY);
 
 async function sendEmail(data) {
-  const response = await resend.emails.send({
+
+  const {data,error} = await resend.emails.send({
     from: 'Pilates nomade <onboarding@resend.dev>',
     to: ['huitquatre.dev@gmail.com'],
     subject: "Nouvelle réservation - Pilates Nomade",
     html: data.html,
   });
 
-  if (!response.ok) {
-    const error = await response.json().catch(() => ({}));
+  if (error) {
     console.log("Email sending error:", error);
     return { error: error.message || "Failed to send email" };
   }
