@@ -13,13 +13,13 @@ async function sendEmail(data) {
 
   if (error) {
     console.log("Email sending error:", error);
-    return { error: error.message || "Failed to send email" };
+    return console.error({ error });
   }
 
   return new Response(JSON.stringify({ success: true, data }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" }
-    });
+    status: 200,
+    headers: { "Content-Type": "application/json" }
+  });
 }
 
 export async function POST(request) {
