@@ -1,13 +1,13 @@
+import {Resend} from "resend";
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const resend = new Resend(RESEND_API_KEY);
 
 async function sendEmail(data) {
-  const response = await fetch("https://api.resend.com/v1/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${RESEND_API_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
+  const response = await resend.emails.send({
+    from: 'Pilates nomade <onboarding@resend.dev>',
+    to: ['huitquatre.dev@gmail.com'],
+    subject: "Nouvelle réservation - Pilates Nomade",
+    html: data.html,
   });
 
   if (!response.ok) {
@@ -49,9 +49,6 @@ export async function POST(request) {
 
   try {
     const { data, error } = await sendEmail({
-      from: "Pilates Nomade <onboarding@resend.dev>",
-      to: ["huitquatre.dev@gmail.com"],
-      subject: "Nouvelle réservation - Pilates Nomade",
       html: `
         <h2>Nouvelle réservation</h2>
         <p><strong>Nom:</strong> ${name}</p>
