@@ -19,20 +19,33 @@ async function sendEmail(data) {
 }
 
 export async function POST(request) {
+  if (!RESEND_API_KEY) {
+    return new Response(JSON.stringify({ error: "Server configuration error" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" }
+    });
+  }
+
+  let body;
   try {
-    const body = await request.json();
-    const { name, email, phone, day, time, cours } = body;
+    body = await request.json();
+  } catch {
+    return new Response(JSON.stringify({ error: "Invalid request body" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" }
+    });
+  }
 
-    if (!name || !email || !phone || !day || !time || !cours) {
-      return new Response(
-        JSON.stringify({ error: "All fields are required" }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-    }
+  const { name, email, phone, day, time, cours } = body;
 
+  if (!name || !email || !phone || !day || !time || !cours) {
+    return new Response(JSON.stringify({ error: "All fields are required" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" }
+    });
+  }
+
+  try {
     const { data, error } = await sendEmail({
       from: "Pilates Nomade <onboarding@resend.dev>",
       to: ["huitquatre.dev@gmail.com"],
@@ -51,29 +64,20 @@ export async function POST(request) {
     });
 
     if (error) {
-      return new Response(
-        JSON.stringify({ error }),
-        {
-          status: 500,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      return new Response(JSON.stringify({ error }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" }
+      });
     }
 
-    return new Response(
-      JSON.stringify({ success: true, data }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    return new Response(JSON.stringify({ success: true, data }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" }
+    });
   } catch (error) {
-    return new Response(
-      JSON.stringify({ error: error.message || "Internal server error" }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    return new Response(JSON.stringify({ error: error.message || "Internal server error" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" }
+    });
   }
 }
