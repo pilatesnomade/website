@@ -1,25 +1,22 @@
 import {Resend} from "resend";
+
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const resend = new Resend(RESEND_API_KEY);
 
-async function sendEmail(data) {
-
-  const {data,error} = await resend.emails.send({
+async function sendEmail(emailData) {
+  const {data, error} = await resend.emails.send({
     from: 'Pilates nomade <onboarding@resend.dev>',
     to: ['huitquatre.dev@gmail.com'],
     subject: "Nouvelle réservation - Pilates Nomade",
-    html: data.html,
+    html: emailData.html,
   });
 
   if (error) {
     console.log("Email sending error:", error);
-    return console.error({ error });
+    return { error };
   }
 
-  return new Response(JSON.stringify({ success: true, data }), {
-    status: 200,
-    headers: { "Content-Type": "application/json" }
-  });
+  return { data };
 }
 
 export async function POST(request) {
@@ -51,7 +48,7 @@ export async function POST(request) {
   }
 
   try {
-    const { data, error } = await sendEmail({
+    const result = await sendEmail({
       html: `
         <h2>Nouvelle réservation</h2>
         <p><strong>Nom:</strong> ${name}</p>
@@ -65,15 +62,15 @@ export async function POST(request) {
       `,
     });
 
-    if (error) {
-      console.log("Email sending failed:", error);
-      return new Response(JSON.stringify({ error }), {
+    if (result.error) {
+      console.log("Email sending failed:", result.error);
+      return new Response(JSON.stringify({ error: result.error }), {
         status: 500,
         headers: { "Content-Type": "application/json" }
       });
     }
 
-    return new Response(JSON.stringify({ success: true, data }), {
+    return new Response(JSON.stringify({ success: true, data: result.data }), {
       status: 200,
       headers: { "Content-Type": "application/json" }
     });
