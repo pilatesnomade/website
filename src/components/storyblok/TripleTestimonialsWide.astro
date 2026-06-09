@@ -19,7 +19,7 @@ const { blok } = Astro.props;
               <div
                 data-stacking-card-target=""
                 class={`cards-stack-card ${testimonial.color} is--wide`}>
-                <div class="mx-auto w-[calc(100%-2.5rem)] max-w-[127ch] lg:w-[calc(100%-4rem)]">
+                <div class="mx-auto max-w-[127ch]">
                   <div class="testimonial__block-wrapper mb-8 lg:mb-12">
                     <svg
                       class="icon inline-block h-24 w-24 shrink-0 fill-current leading-none opacity-10"
@@ -28,7 +28,7 @@ const { blok } = Astro.props;
                       <polygon points="2 36 17 2 26 2 15 36 26 36 26 62 2 62 2 36"> </polygon>
                       <polygon points="38 36 53 2 62 2 51 36 62 36 62 62 38 62 38 36"> </polygon>
                     </svg>
-                    <blockquote class="text-center text-2xl leading-snug lg:text-3xl lg:leading-snug">
+                    <blockquote class="text-center text-lg leading-snug md:text-xl lg:text-3xl lg:leading-snug">
                       {testimonial.text}
                     </blockquote>
                   </div>
@@ -49,6 +49,7 @@ const { blok } = Astro.props;
 </section>
 
 <style>
+  @reference "../../styles/global.css";
   .cards-stack {
     padding-top: 15dvh;
     padding-bottom: 15dvh;
@@ -165,7 +166,7 @@ const { blok } = Astro.props;
 
   @media screen and (max-width: 991px) {
     .cards-stack-card.is--wide {
-      aspect-ratio: 5 / 4;
+      aspect-ratio: 7 / 4;
     }
     .cards-stack-card__number {
       font-size: 4em;
@@ -186,11 +187,22 @@ const { blok } = Astro.props;
     }
 
     .cards-stack-card.is--wide {
-      aspect-ratio: 2 / 3;
+      aspect-ratio: 7 / 3;
     }
 
     .cards-stack-card__h.is--wide {
       font-size: 3.375em;
+    }
+
+    .container {
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .cards-stack-card {
+      padding: 1em;
     }
   }
 </style>
