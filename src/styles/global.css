@@ -230,7 +230,7 @@
     fill: var(--color-marron);
   }
   .text-container-big {
-    @apply prose-headings:mt-4 prose-base md:prose-2xl lg:prose-headings:text-7xl xl:prose-p:text-5xl mx-auto w-full max-w-screen px-8 lg:px-16 2xl:max-w-screen-2xl;
+    @apply prose-headings:mt-4 prose-base md:prose-2xl lg:prose-headings:text-7xl xl:prose-p:text-4xl mx-auto w-full max-w-screen px-8 lg:px-16 2xl:max-w-screen-2xl;
     ul,
     ol {
       @apply list-inside list-disc;
