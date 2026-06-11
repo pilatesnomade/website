@@ -8,7 +8,7 @@ const { blok } = Astro.props;
 ---
 
 <section
-  class={`hero relative flex min-h-screen items-start justify-center text-center ${blok.addbg ? "addbg" : ""}`}
+  class={`hero relative flex min-h-screen items-center justify-center text-center ${blok.addbg ? "addbg" : ""}`}
   {...storyblokEditable(blok)}>
   <Image
     src={blok.image?.filename}
