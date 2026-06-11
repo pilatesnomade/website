@@ -1,3 +1,30 @@
+---
+import { useStoryblokApi } from "@storyblok/astro";
+
+const storyblokApi = useStoryblokApi();
+// Use 'draft' version in preview mode, 'published' otherwise
+const isPreview = import.meta.env.IS_PREVIEW === true || import.meta.env.IS_PREVIEW === "true";
+const version = isPreview ? "draft" : "published";
+
+const { data } = await storyblokApi.get("cdn/stories/global/menu", {
+  version,
+  token: import.meta.env.STORYBLOK_TOKEN,
+  resolve_links: "url",
+  resolve_relations: "items"
+});
+
+const menuItems = data.story.content.items.map((item) => ({
+  name: data.rels.find((rel) => rel.uuid === item)?.name,
+  url:
+    data.rels.find((rel) => rel.uuid === item)?.full_slug === "home"
+      ? ""
+      : data.rels.find((rel) => rel.uuid === item)?.full_slug
+}));
+
+console.log(Astro.url.pathname);
+console.log(`/${menuItems[1]?.url}`);
+---
+
 <nav data-navigation-status="not-active" class="navigation">
   <div data-navigation-toggle="close" class="navigation__dark-bg"></div>
   <div class="hamburger-nav">
@@ -5,42 +32,19 @@
     <div class="hamburger-nav__group">
       <p class="hamburger-nav__menu-p">Menu</p>
       <ul class="hamburger-nav__ul">
-        <div class="hamburger-nav__li">
-          <a href="index.html" aria-current="page" class="hamburger-nav__a">
-            <p class="hamburger-nav__p">Accueil</p>
-            <div class="hamburger-nav__dot"></div>
-          </a>
-        </div>
-        <div class="hamburger-nav__li">
-          <a href="#" class="hamburger-nav__a">
-            <p class="hamburger-nav__p">Qui suis-je ?</p>
-            <div class="hamburger-nav__dot"></div>
-          </a>
-        </div>
-        <div class="hamburger-nav__li">
-          <a href="#" class="hamburger-nav__a">
-            <p class="hamburger-nav__p">Pilates</p>
-            <div class="hamburger-nav__dot"></div>
-          </a>
-        </div>
-        <div class="hamburger-nav__li">
-          <a href="#" class="hamburger-nav__a">
-            <p class="hamburger-nav__p">Psycho-corporel</p>
-            <div class="hamburger-nav__dot"></div>
-          </a>
-        </div>
-        <div class="hamburger-nav__li">
-          <a href="#" class="hamburger-nav__a">
-            <p class="hamburger-nav__p">Prestations</p>
-            <div class="hamburger-nav__dot"></div>
-          </a>
-        </div>
-        <div class="hamburger-nav__li">
-          <a href="#" class="hamburger-nav__a">
-            <p class="hamburger-nav__p">Contact</p>
-            <div class="hamburger-nav__dot"></div>
-          </a>
-        </div>
+        {
+          menuItems.map((item) => (
+            <div class="hamburger-nav__li">
+              <a
+                href={`/${item.url}`}
+                aria-current={`/${item.url}` == Astro.url.pathname ? "page" : false}
+                class="hamburger-nav__a">
+                <p class="hamburger-nav__p">{item.name}</p>
+                <div class="hamburger-nav__dot" />
+              </a>
+            </div>
+          ))
+        }
       </ul>
     </div>
     <div data-navigation-toggle="toggle" class="hamburger-nav__toggle">
@@ -155,7 +159,7 @@
     display: flex;
   }
 
-  .hamburger-nav__a[aria-current] .hamburger-nav__p {
+  .hamburger-nav__a[aria-current="page"] .hamburger-nav__p {
     opacity: 0.33;
   }
 
@@ -177,7 +181,7 @@
     opacity: 0.5;
   }
 
-  .hamburger-nav__a[aria-current] .hamburger-nav__dot {
+  .hamburger-nav__a[aria-current="page"] .hamburger-nav__dot {
     transform: scale(1) rotate(0.001deg);
     opacity: 1;
   }
