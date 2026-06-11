@@ -1,10 +1,26 @@
 ---
-import { Image } from "astro:assets";
+import { Image, inferRemoteSize } from "astro:assets";
 import { storyblokEditable } from "@storyblok/astro";
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
 import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro";
 
 const { blok } = Astro.props;
+
+const cardsWithFocal = await Promise.all(
+  blok.cards.map(async (card) => {
+    if (!card.image?.id) {
+      return { card, focalX: 50, focalY: 50, width: 0, height: 0 };
+    }
+
+    const [posX = "50", posY = "50"] = (card.image.focus || "50x50").split("x");
+    const { width = 1, height = 1 } = await inferRemoteSize(card.image.filename);
+
+    const focalX = (parseInt(posX) / width) * 100;
+    const focalY = (parseInt(posY) / height) * 100;
+
+    return { card, focalX, focalY, width, height };
+  })
+);
 ---
 
 <section
@@ -18,7 +34,7 @@ const { blok } = Astro.props;
     <div class="cards-stack__collection">
       <div data-stacking-card-stack="" class="cards-stack__list">
         {
-          blok.cards?.map((card) => (
+          cardsWithFocal.map(({ card, focalX, focalY, width, height }) => (
             <a
               href={`/${card.url?.story?.full_slug === "home" ? "" : card.url?.story?.full_slug || "#"}`}
               data-stacking-card=""
@@ -44,9 +60,11 @@ const { blok } = Astro.props;
                   <Image
                     src={card.image?.filename}
                     alt={card.image?.alt}
-                    class="max-h-72 w-full rounded-xl object-cover"
-                    inferSize
+                    class="focal max-h-72 w-full rounded-xl object-cover"
+                    width={width}
+                    height={height}
                     layout="constrained"
+                    style={`--focalPointX: ${focalX}; --focalPointY: ${focalY};`}
                   />
                 </div>
               </div>
@@ -62,6 +80,10 @@ const { blok } = Astro.props;
   .cards-stack {
     padding-top: 15dvh;
     padding-bottom: 15dvh;
+  }
+
+  .focal {
+    object-position: calc(var(--focalPointY) * 1%) calc(var(--focalPointY) * 1%);
   }
 
   .container {
