@@ -62,6 +62,7 @@ export default defineConfig({
       pricing: "Pricing",
       planning: "Planning",
       contact: "Contact",
+      maps: "Maps"
     },
     accessToken: import.meta.env.STORYBLOK_TOKEN || "your_token_here",
     enableFallbackComponent: true,

@@ -1,0 +1,88 @@
+---
+import { Image } from "astro:assets";
+import { storyblokEditable } from "@storyblok/astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro";
+
+import Map from "../helpers/map.png";
+
+const { blok } = Astro.props;
+---
+
+<section class={`split-layout ${blok.margin ? "mt-16" : ""}`} {...storyblokEditable(blok)}>
+  <a class="image" href="https://maps.app.goo.gl/3yLeCQXSthYNjkCs9">
+    <Image
+      src={Map}
+      alt="Carte Pilates nomade"
+      inferSize
+      layout="constrained"
+      class="h-full w-full object-cover"
+    />
+  </a>
+  <div class="content text-container-base">
+    {
+      blok.content && (
+        <RichTextRenderer
+          content={blok.content}
+          resolver={(blok) => {
+            return {
+              component: StoryblokComponent,
+              props: { blok }
+            };
+          }}
+        />
+      )
+    }
+  </div>
+</section>
+
+<script>
+  function setImageHeight() {
+    const splitSections = document.querySelectorAll(".split-layout");
+    splitSections.forEach((section) => {
+      const contentHeight = section.querySelector(".content > div")?.clientHeight;
+      const image = section.querySelector(".image");
+      if (image) {
+        image.style.height = `calc(${contentHeight}px + 8rem)`;
+      }
+    });
+  }
+
+  // Run on initial load
+  setImageHeight();
+
+  // Run on resize
+  window.addEventListener("resize", setImageHeight);
+</script>
+
+<style>
+  .split-layout {
+    display: grid;
+    gap: 0;
+  }
+
+  .image {
+    max-height: none;
+  }
+
+  /* On mobile, stack vertically */
+  @media (max-width: 1024px) {
+    .split-layout {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+      & .image {
+        order: -1; /* Move image above content */
+      }
+    }
+    .image {
+      max-height: 50vh;
+    }
+  }
+
+  /* Ensure image fills its container while maintaining aspect ratio */
+  .split-layout > :first-child img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>

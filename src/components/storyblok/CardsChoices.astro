@@ -3,6 +3,7 @@ import { Image, inferRemoteSize } from "astro:assets";
 import { storyblokEditable } from "@storyblok/astro";
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
 import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro";
+import Heading from "../helpers/Heading.astro";
 
 const { blok } = Astro.props;
 
@@ -41,10 +42,12 @@ const cardsWithFocal = await Promise.all(
               class="cards-stack__item is--wide">
               <div data-stacking-card-target="" class={`cards-stack-card is--wide ${card.color}`}>
                 <div class="cards-stack-card__start pb-8">
-                  <span class="cards-stack-card__number">{card?.title}</span>
+                  <Heading tag={blok.tag || "p"} class="cards-stack-card__number text-inherit">
+                    {card?.title}
+                  </Heading>
                 </div>
                 {card.description && (
-                  <div class={`mb-8 text-inherit`}>
+                  <div class={`text-container-base mb-8 text-inherit`}>
                     <RichTextRenderer
                       content={card.description}
                       resolver={(blok) => {
@@ -161,7 +164,7 @@ const cardsWithFocal = await Promise.all(
   }
 
   .cards-stack-card__number {
-    font-size: 6em;
+    font-size: 4em;
     font-weight: 500;
     line-height: 0.95;
   }

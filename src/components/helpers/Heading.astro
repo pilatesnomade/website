@@ -1,0 +1,7 @@
+---
+import type { $brand } from "astro:schema";
+
+const { tag: Tag, class: className, ...rest } = Astro.props;
+---
+
+<Tag class={className} {...rest}><slot /></Tag>

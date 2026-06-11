@@ -14,7 +14,7 @@ const { data } = await storyblokApi.get("cdn/stories/global/footer", {
   version,
   token: import.meta.env.STORYBLOK_TOKEN,
   resolve_links: "url",
-  resolve_relations: "pages, legal"
+  resolve_relations: ["pages", "legal"]
 });
 
 const footer = {
