@@ -12,13 +12,13 @@ const { blok } = Astro.props;
       blok.cards.map((card) => (
         <div
           class={`pricing-card bg-${card.color} flex ${blok.cards.length > 1 ? "flex-col " : "flex-col md:flex-row"} items-center justify-center`}>
-          <div class="h-14 self-end pb-8">
-            {card.tag && (
+          {card.tag && (
+            <div class="h-14 self-end pb-8">
               <span class="bg-atoll/10 inline-flex items-center rounded-full p-1 text-[0.9375rem]">
                 <i class="px-2 py-0 not-italic">{card.tag}</i>
               </span>
-            )}
-          </div>
+            </div>
+          )}
 
           <div class={`price ${blok.cards.length > 1 ? "w-full" : "w-full md:w-1/3"} tabular-nums`}>
             <p class="text-7xl">{card.price} €</p>
