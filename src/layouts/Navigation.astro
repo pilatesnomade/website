@@ -20,9 +20,6 @@ const menuItems = data.story.content.items.map((item) => ({
       ? ""
       : data.rels.find((rel) => rel.uuid === item)?.full_slug
 }));
-
-console.log(Astro.url.pathname);
-console.log(`/${menuItems[1]?.url}`);
 ---
 
 <nav data-navigation-status="not-active" class="navigation">

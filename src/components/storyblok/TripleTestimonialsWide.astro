@@ -22,7 +22,7 @@ const { blok } = Astro.props;
                 <div class="mx-auto max-w-[127ch]">
                   <div class="testimonial__block-wrapper mb-8 lg:mb-12">
                     <svg
-                      class="icon inline-block h-24 w-24 shrink-0 fill-current leading-none opacity-10"
+                      class="icon inline-block h-8 w-8 shrink-0 fill-current leading-none opacity-10 lg:h-24 lg:w-24"
                       aria-hidden="true"
                       viewBox="0 0 64 64">
                       <polygon points="2 36 17 2 26 2 15 36 26 36 26 62 2 62 2 36"> </polygon>
@@ -171,6 +171,9 @@ const { blok } = Astro.props;
     .cards-stack-card__number {
       font-size: 4em;
     }
+    .cards-stack__item {
+      top: 2em;
+    }
   }
 
   @media screen and (max-width: 767px) {
@@ -203,6 +206,9 @@ const { blok } = Astro.props;
 
     .cards-stack-card {
       padding: 1em;
+    }
+    .cards-stack__item {
+      top: 1em;
     }
   }
 </style>
