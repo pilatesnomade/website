@@ -18,7 +18,8 @@ const { blok } = Astro.props;
     layout="constrained"
   />
   <div class="overlay"></div>
-  <div class="text-container-big text-atoll z-10 max-w-[80ch] px-4 pb-16 text-left lg:px-12">
+  <div
+    class="text-container-big text-atoll z-10 m-4 w-fit max-w-[80ch] px-4 pb-16 text-left lg:m-0 lg:px-12">
     {
       blok.content && (
         <RichTextRenderer
