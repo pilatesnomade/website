@@ -6,7 +6,7 @@ const resend = new Resend(RESEND_API_KEY);
 async function sendEmail(emailData) {
   const {data, error} = await resend.emails.send({
     from: 'Pilates nomade <onboarding@resend.dev>',
-    to: ['huitquatre.dev@gmail.com'],
+    to: ['judithmnl@gmail.com'],
     subject: "Nouvelle réservation - Pilates Nomade",
     html: emailData.html,
   });
