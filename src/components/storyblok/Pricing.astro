@@ -25,7 +25,7 @@ const { blok } = Astro.props;
             <p class="px-2">{card.infoprice}</p>
             {card.discount && (
               <p class="pt-2">
-                <span class="bg-atoll/10 inline-flex items-center rounded-full p-1 text-[0.9375rem]">
+                <span class="pastille inline-flex items-center rounded-full p-1 text-[0.9375rem]">
                   <i class="px-2 py-0 not-italic">{card.discount}</i>
                 </span>
               </p>
@@ -72,5 +72,16 @@ const { blok } = Astro.props;
     width: 100%;
     padding: 1em;
     display: flex;
+  }
+  :global(.pricing-card.bg-pastel) .pastille {
+    background-color: color-mix(in oklch, var(--color-jaune), transparent 10%);
+  }
+  :global(.pricing-card.bg-lavande) .pastille {
+    background-color: color-mix(in oklch, var(--color-jaune), transparent 10%);
+    color: var(--color-marron);
+  }
+  :global(.pricing-card.bg-jaune) .pastille {
+    background-color: color-mix(in oklch, var(--color-lavande), transparent 10%);
+    color: white;
   }
 </style>
