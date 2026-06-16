@@ -72,7 +72,7 @@
   .big-breathing {
     font-family: "Breathing";
     vertical-align: middle;
-    @apply text-4xl md:text-5xl lg:text-6xl xl:text-7xl;
+    @apply text-4xl leading-relaxed md:text-5xl lg:text-6xl xl:text-7xl;
   }
 
   .big-text {
