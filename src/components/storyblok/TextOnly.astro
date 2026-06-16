@@ -24,7 +24,7 @@ const { blok } = Astro.props;
   {blok.sticker && (
     <Stickers
       variant={blok.sticker}
-      class=`w-32 lg:w-64 h-auto absolute -bottom-20 ${blok.stickerPosition==="left" ? "left-8" : blok.stickerPosition==="right" ? "right-8" : "right-1/2 translate-x-1/2"} z-10`
+      class=`w-32 lg:w-64 h-auto absolute -bottom-12 ${blok.stickerPosition==="left" ? "left-8" : blok.stickerPosition==="right" ? "right-8" : "right-1/2 translate-x-1/2"} z-10`
       `
     />
   )}
