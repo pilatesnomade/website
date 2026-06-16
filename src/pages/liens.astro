@@ -1,0 +1,236 @@
+---
+import Logo from "../components/helpers/Logo.astro";
+import Button from "../components/storyblok/Button.astro";
+
+import "../styles/global.css";
+const mywebsite = {
+  text: "Mon site internet",
+  variant: "accent",
+  url: {
+    url: "https://www.pilates-nomade.fr"
+  }
+};
+const appeldecouvert = {
+  text: "Réserve ton appel découverte",
+  variant: "accent",
+  url: {
+    url: "https://calendly.com/pilates-nomade"
+  }
+};
+const evenements = {
+  text: "Mes évènements",
+  variant: "accent",
+  url: {
+    url: "https://www.billetweb.fr/multi_event.php?user=74039"
+  }
+};
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+  </head>
+
+  <body class="antialiased">
+    <main id="main-content" class="h-screen">
+      <div class="cursor"></div>
+      <Logo class="mx-auto h-64 w-64" />
+      <ul class="flex flex-wrap items-center justify-center gap-4">
+        <li>
+          <a
+            href="https://www.instagram.com/pilates.nomade/"
+            class="bg-atoll hover:bg-corail focus:bg-corail flex h-16 w-16 items-center justify-center rounded-full text-white transition-all duration-200">
+            <svg
+              class="social h-12 w-12"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor">
+              <path
+                d="M11.999 7.377a4.623 4.623 0 1 0 0 9.248 4.623 4.623 0 0 0 0-9.248zm0 7.627a3.004 3.004 0 1 1 0-6.008 3.004 3.004 0 0 1 0 6.008z"
+              ></path>
+              <circle cx="16.806" cy="7.207" r="1.078"></circle>
+              <path
+                d="M20.533 6.111A4.605 4.605 0 0 0 17.9 3.479a6.606 6.606 0 0 0-2.186-.42c-.963-.042-1.268-.054-3.71-.054s-2.755 0-3.71.054a6.554 6.554 0 0 0-2.184.42 4.6 4.6 0 0 0-2.633 2.632 6.585 6.585 0 0 0-.419 2.186c-.043.962-.056 1.267-.056 3.71 0 2.442 0 2.753.056 3.71.015.748.156 1.486.419 2.187a4.61 4.61 0 0 0 2.634 2.632 6.584 6.584 0 0 0 2.185.45c.963.042 1.268.055 3.71.055s2.755 0 3.71-.055a6.615 6.615 0 0 0 2.186-.419 4.613 4.613 0 0 0 2.633-2.633c.263-.7.404-1.438.419-2.186.043-.962.056-1.267.056-3.71s0-2.753-.056-3.71a6.581 6.581 0 0 0-.421-2.217zm-1.218 9.532a5.043 5.043 0 0 1-.311 1.688 2.987 2.987 0 0 1-1.712 1.711 4.985 4.985 0 0 1-1.67.311c-.95.044-1.218.055-3.654.055-2.438 0-2.687 0-3.655-.055a4.96 4.96 0 0 1-1.669-.311 2.985 2.985 0 0 1-1.719-1.711 5.08 5.08 0 0 1-.311-1.669c-.043-.95-.053-1.218-.053-3.654 0-2.437 0-2.686.053-3.655a5.038 5.038 0 0 1 .311-1.687c.305-.789.93-1.41 1.719-1.712a5.01 5.01 0 0 1 1.669-.311c.951-.043 1.218-.055 3.655-.055s2.687 0 3.654.055a4.96 4.96 0 0 1 1.67.311 2.991 2.991 0 0 1 1.712 1.712 5.08 5.08 0 0 1 .311 1.669c.043.951.054 1.218.054 3.655 0 2.436 0 2.698-.043 3.654h-.011z"
+              ></path>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.facebook.com/PilatesNomade"
+            class="bg-atoll hover:bg-corail focus:bg-corail flex h-16 w-16 items-center justify-center rounded-full text-white transition-all duration-200">
+            <svg
+              class="social h-12 w-12"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor">
+              <path
+                d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"
+              ></path>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.linkedin.com/in/judith-mounal-a966b5b1/"
+            class="bg-atoll hover:bg-corail focus:bg-corail flex h-16 w-16 items-center justify-center rounded-full text-white transition-all duration-200">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="48"
+              height="48"
+              viewBox="0 0 48 48"
+              fill="none">
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M0 24C0 10.7452 10.7452 0 24 0C37.2548 0 48 10.7452 48 24C48 37.2548 37.2548 48 24 48C10.7452 48 0 37.2548 0 24ZM16.9605 19.8778H11.5216V36.2196H16.9605V19.8778ZM17.3188 14.8227C17.2835 13.2204 16.1377 12 14.277 12C12.4164 12 11.2 13.2204 11.2 14.8227C11.2 16.3918 12.3805 17.6473 14.2064 17.6473H14.2412C16.1377 17.6473 17.3188 16.3918 17.3188 14.8227ZM36.5754 26.8497C36.5754 21.8303 33.8922 19.4941 30.3131 19.4941C27.4254 19.4941 26.1326 21.0802 25.4107 22.1929V19.8783H19.9711C20.0428 21.4117 19.9711 36.22 19.9711 36.22H25.4107V27.0934C25.4107 26.605 25.446 26.1178 25.5898 25.7681C25.9829 24.7924 26.8779 23.7822 28.3805 23.7822C30.3494 23.7822 31.1365 25.2807 31.1365 27.4767V36.2196H36.5752L36.5754 26.8497Z"
+                fill="white"></path>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.google.com/search?client=firefox-b-d&q=pilates+nomade"
+            class="bg-atoll hover:bg-corail focus:bg-corail flex h-16 w-16 items-center justify-center rounded-full text-white transition-all duration-200">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="48"
+              height="48"
+              viewBox="0 0 48 48"
+              fill="none">
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M0 24C0 10.7452 10.7452 0 24 0C37.2548 0 48 10.7452 48 24C48 37.2548 37.2548 48 24 48C10.7452 48 0 37.2548 0 24ZM23.9654 17.6213C25.9154 17.6213 27.2309 18.4649 27.9809 19.1698L30.9118 16.304C29.1117 14.6284 26.7693 13.6 23.9654 13.6C19.9037 13.6 16.3959 15.9342 14.6881 19.3316L18.0459 21.9431C18.8883 19.4356 21.2191 17.6213 23.9654 17.6213ZM33.935 24.2311C33.935 23.376 33.8657 22.752 33.7157 22.1049H23.9654V25.9644H29.6887C29.5733 26.9236 28.9502 28.368 27.5655 29.3387L30.8425 31.8809C32.8042 30.0667 33.935 27.3973 33.935 24.2311ZM18.0575 26.0569C17.8382 25.4098 17.7113 24.7164 17.7113 24C17.7113 23.2836 17.8382 22.5902 18.0459 21.9431L14.6881 19.3316C13.9842 20.7413 13.5804 22.3244 13.5804 24C13.5804 25.6756 13.9842 27.2587 14.6881 28.6684L18.0575 26.0569ZM23.9654 34.4C26.7693 34.4 29.1232 33.4756 30.8425 31.8809L27.5655 29.3387C26.6885 29.9511 25.5116 30.3787 23.9654 30.3787C21.2191 30.3787 18.8883 28.5644 18.0575 26.0569L14.6996 28.6684C16.4074 32.0658 19.9037 34.4 23.9654 34.4Z"
+                fill="white"></path>
+            </svg>
+          </a>
+        </li>
+      </ul>
+      <ul class="mt-16 flex flex-col items-center justify-center gap-8">
+        <li>
+          <Button blok={mywebsite} />
+        </li>
+        <li>
+          <Button blok={appeldecouvert} />
+        </li>
+        <li>
+          <Button blok={evenements} />
+        </li>
+        <li>
+          <form id="newsletter-form" class="mt-6 flex items-baseline gap-2">
+            <div>
+              <label for="email" class="sr-only">Email</label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Mon email"
+                required
+                class="caret-corail focus:border-corail block w-full rounded-md border border-gray-200 bg-white p-4 text-black placeholder-gray-500 transition-all duration-200 focus:outline-none"
+              />
+            </div>
+
+            <button
+              type="submit"
+              id="newsletter-submit"
+              class="bg-atoll hover:bg-corail focus:bg-corail mt-3 inline-flex items-center justify-center rounded-md px-6 py-4 font-semibold text-white transition-all duration-200">
+              <span id="submit-text">S'inscrire à la newsletter</span>
+              <span id="loading-spinner" class="ml-2 hidden">
+                <svg
+                  class="h-4 w-4 animate-spin text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24">
+                  <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"></circle>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+              </span>
+            </button>
+            <p id="form-message" class="mt-2 hidden text-sm"></p>
+          </form>
+
+          <script>
+            document.addEventListener("DOMContentLoaded", function () {
+              const form = document.getElementById("newsletter-form");
+              const submitBtn = document.getElementById("newsletter-submit");
+              const submitText = document.getElementById("submit-text");
+              const loadingSpinner = document.getElementById("loading-spinner");
+              const messageEl = document.getElementById("form-message");
+              const emailInput = document.getElementById("email");
+
+              form.addEventListener("submit", async function (e) {
+                e.preventDefault();
+
+                const email = emailInput.value.trim();
+
+                if (!email) {
+                  showMessage("Veuillez entrer une adresse email", "error");
+                  return;
+                }
+
+                setLoading(true);
+                hideMessage();
+
+                try {
+                  const response = await fetch("/api/subscribe", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email })
+                  });
+
+                  const data = await response.json();
+
+                  if (response.ok) {
+                    showMessage("Inscription réussie ! Merci.", "success");
+                    form.reset();
+                  } else {
+                    showMessage(data.error || "Une erreur est survenue", "error");
+                  }
+                } catch {
+                  showMessage("Erreur de connexion. Veuillez réessayer.", "error");
+                } finally {
+                  setLoading(false);
+                }
+              });
+
+              function setLoading(loading) {
+                submitBtn.disabled = loading;
+                if (loading) {
+                  submitText.textContent = "Envoi...";
+                  loadingSpinner.classList.remove("hidden");
+                } else {
+                  submitText.textContent = "S'inscrire";
+                  loadingSpinner.classList.add("hidden");
+                }
+              }
+
+              function showMessage(text, type) {
+                messageEl.textContent = text;
+                messageEl.className =
+                  "mt-2 text-sm " + (type === "success" ? "text-green-600" : "text-red-600");
+                messageEl.classList.remove("hidden");
+              }
+
+              function hideMessage() {
+                messageEl.classList.add("hidden");
+              }
+            });
+          </script>
+        </li>
+      </ul>
+    </main>
+  </body>
+</html>
