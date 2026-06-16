@@ -47,7 +47,7 @@ const cardsWithFocal = await Promise.all(
                   </Heading>
                 </div>
                 {card.description && (
-                  <div class={`text-container-base mb-8 text-inherit`}>
+                  <div class={`text-container-base mb-8 px-0 text-inherit`}>
                     <RichTextRenderer
                       content={card.description}
                       resolver={(blok) => {
@@ -81,7 +81,7 @@ const cardsWithFocal = await Promise.all(
 
 <style>
   .cards-stack {
-    padding-top: 15dvh;
+    padding-top: 5dvh;
     padding-bottom: 15dvh;
   }
 
@@ -116,7 +116,7 @@ const cardsWithFocal = await Promise.all(
   }
 
   .cards-stack__item.is--wide {
-    max-width: 60em;
+    max-width: 80em;
   }
 
   .cards-stack-card {
@@ -127,7 +127,6 @@ const cardsWithFocal = await Promise.all(
     width: 100%;
     padding: 2.5em;
     display: flex;
-    max-width: 60em;
   }
 
   .cards-stack-card.corail {
@@ -213,18 +212,27 @@ const cardsWithFocal = await Promise.all(
 
     .cards-stack__item.is--wide {
       max-width: 25em;
+      top: 1em;
     }
 
     .cards-stack-card {
       font-size: 0.8em;
+      padding: 1rem;
     }
 
     .cards-stack-card.is--wide {
-      aspect-ratio: 2 / 3;
+      aspect-ratio: 7 / 3;
     }
 
     .cards-stack-card__h.is--wide {
       font-size: 3.375em;
+    }
+
+    .container {
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1em;
+      padding-right: 1em;
     }
   }
 </style>

@@ -241,28 +241,28 @@
     @apply prose-headings:mt-4 prose-base md:prose-2xl lg:prose-headings:text-7xl xl:prose-p:text-4xl mx-auto w-full max-w-screen px-8 lg:px-16 2xl:max-w-screen-2xl;
     ul,
     ol {
-      @apply list-inside list-disc;
+      @apply list-inside list-disc pl-0;
     }
   }
   .text-container-base {
     @apply prose-base md:prose-xl lg:prose-headings:text-5xl xl:prose-p:text-3xl mx-auto w-full max-w-screen px-8 lg:px-16 2xl:max-w-screen-2xl;
     ul,
     ol {
-      @apply list-inside list-disc;
+      @apply list-inside list-disc pl-0;
     }
   }
   .text-container-small {
     @apply prose-base md:prose-base lg:prose-headings:text-xl xl:prose-p:text-xl mx-auto w-full max-w-screen px-8 lg:px-16 2xl:max-w-screen-2xl;
     ul,
     ol {
-      @apply list-inside list-disc;
+      @apply list-inside list-disc pl-0;
     }
   }
   .text-container-small-wide {
     @apply prose-base md:prose-base lg:prose-headings:text-xl xl:prose-p:text-xl mx-auto w-full max-w-screen px-1 lg:px-2 2xl:max-w-screen-2xl;
     ul,
     ol {
-      @apply list-inside list-disc;
+      @apply list-inside list-disc pl-0;
     }
   }
 
