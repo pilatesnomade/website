@@ -14,6 +14,7 @@ const isPreview = env.IS_PREVIEW === true || process.env.IS_PREVIEW === true || 
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://www.pilates-nomade.fr",
   output: isPreview ? "server" : "static",
   adapter: vercel({
     webAnalytics: { enabled: true },
