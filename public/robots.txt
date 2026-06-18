@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://huitquatre.fr/sitemap-index.xml
+Sitemap: https://www.pilates-nomade.fr/sitemap-0.xml
