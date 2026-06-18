@@ -6,142 +6,142 @@
     {
       "source": "/wp-content/uploads/2022/08/mandala_or.svg",
       "destination": "/",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/wp-content/uploads/2022/08/demi_mandala_blanc2.svg",
       "destination": "/",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/wp-content/uploads/2022/08/FB_blanc-1024x1024.png.webp",
       "destination": "/",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/wp-content/uploads/2022/08/demi_mandala_or.svg",
       "destination": "/",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/wp-content/uploads/2022/08/insta_blanc.png",
       "destination": "/",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/wp-content/uploads/2022/08/demi_mandala_blanc1.svg",
       "destination": "/",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/wp-content/uploads/2022/08/FB_blanc-1024x1024.png",
       "destination": "/",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/wp-content/uploads/2022/08/mandala_rose.svg",
       "destination": "/",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/cdn-cgi/l/email-protection",
       "destination": "/",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
       "destination": "/",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/wp-content/uploads/2022/08/logo_insta_bleu.png",
       "destination": "/",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/wp-content/uploads/2022/08/logo_fb_bleu.png",
       "destination": "/",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/wp-content/plugins/complianz-gdpr/assets/images/placeholders/default-minimal.jpg",
       "destination": "/",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/wp-content/uploads/2022/08/mandala_blanc.svg",
       "destination": "/",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/psycho-corporel",
       "destination": "/therapie-holistique",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/pilates",
       "destination": "/studio-pilates",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/wp-content/uploads/2025/08/Contrat-dinscription-cours-individuel-MEYSSAC-2025-26.pdf",
       "destination": "/studio-pilates",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/wp-content/uploads/2024/07/Contrat-dinscription-cours-individuel-MEYSSAC-2024-25.pdf",
       "destination": "/studio-pilates",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/wp-content/uploads/2023/08/Contrat-dinscription-cours-individuel-BRIVE-2022-23.pdf",
       "destination": "/studio-pilates",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/wp-content/uploads/2024/07/Contrat-dinscription-cours-individuel-BRIVE-2024-2025.pdf",
       "destination": "/studio-pilates",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/wp-content/uploads/2023/07/Contrat-dinscription-cours-individuel-MEYSSAC-2023-24.pdf",
       "destination": "/studio-pilates",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/wp-content/uploads/2025/08/Planning-previsionnel-Cours-Meyssac.pdf",
       "destination": "/studio-pilates",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/prestations",
       "destination": "/studio-pilates",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/prestations",
       "destination": "/studio-pilates",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/qui-suis-je",
       "destination": "/judith-mounal",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/wp-content/uploads/2022/08/portrait-967x1024.jpg",
       "destination": "/judith-mounal",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/merci-pour-votre-reservation",
       "destination": "/merci",
-      "permanent": "true"
+      "permanent": true
     },
     {
       "source": "/cours-de-yoga-a-brive-reservez-votre-essai-gratuit",
       "destination": "/studio-pilates",
-      "permanent": "true"
+      "permanent": true
     }
   ]
 }
