@@ -4,6 +4,41 @@
   "framework": "astro",
   "redirects": [
     {
+      "source": "/cdn-cgi/l/email-protection/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/psycho-corporel/",
+      "destination": "/therapie-holistique",
+      "permanent": true
+    },
+    {
+      "source": "/pilates/",
+      "destination": "/studio-pilates",
+      "permanent": true
+    },
+    {
+      "source": "/prestations/",
+      "destination": "/studio-pilates",
+      "permanent": true
+    },
+    {
+      "source": "/qui-suis-je/",
+      "destination": "/judith-mounal",
+      "permanent": true
+    },
+    {
+      "source": "/merci-pour-votre-reservation/",
+      "destination": "/merci",
+      "permanent": true
+    },
+    {
+      "source": "/cours-de-yoga-a-brive-reservez-votre-essai-gratuit/",
+      "destination": "/studio-pilates",
+      "permanent": true
+    },
+    {
       "source": "/wp-content/uploads/2022/08/mandala_or.svg",
       "destination": "/",
       "permanent": true
@@ -110,11 +145,6 @@
     },
     {
       "source": "/wp-content/uploads/2025/08/Planning-previsionnel-Cours-Meyssac.pdf",
-      "destination": "/studio-pilates",
-      "permanent": true
-    },
-    {
-      "source": "/prestations",
       "destination": "/studio-pilates",
       "permanent": true
     },
