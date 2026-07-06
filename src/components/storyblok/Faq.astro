@@ -86,6 +86,19 @@ const json = `${JSON.stringify(jsondata, null, 2)}`;
                     {qa.response && (
                       <RichTextRenderer
                         content={qa.response}
+                        schema={{
+                          marks: {
+                            link: ({ attrs }) => {
+                              const { href, ...restAttrs } = attrs;
+                              return {
+                                props: {
+                                  href: href + "/",
+                                  ...restAttrs
+                                }
+                              };
+                            }
+                          }
+                        }}
                         resolver={(blok) => {
                           return {
                             component: StoryblokComponent,

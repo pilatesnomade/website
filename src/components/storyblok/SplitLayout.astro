@@ -40,6 +40,19 @@ if (blok.image.id) {
       blok.content && (
         <RichTextRenderer
           content={blok.content}
+          schema={{
+            marks: {
+              link: ({ attrs }) => {
+                const { href, ...restAttrs } = attrs;
+                return {
+                  props: {
+                    href: href + "/",
+                    ...restAttrs
+                  }
+                };
+              }
+            }
+          }}
           resolver={(blok) => {
             return {
               component: StoryblokComponent,

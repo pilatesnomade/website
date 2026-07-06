@@ -18,6 +18,19 @@ const focalPointY = (parseInt(posY) / height) * 100;
   <div class="content text-container-base py-16">
     <RichTextRenderer
       content={blok.content}
+      schema={{
+        marks: {
+          link: ({ attrs }) => {
+            const { href, ...restAttrs } = attrs;
+            return {
+              props: {
+                href: href + "/",
+                ...restAttrs
+              }
+            };
+          }
+        }
+      }}
       resolver={(blok) => {
         return {
           component: StoryblokComponent,
