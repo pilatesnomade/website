@@ -79,11 +79,6 @@
       "permanent": true
     },
     {
-      "source": "/cdn-cgi/l/email-protection",
-      "destination": "/",
-      "permanent": true
-    },
-    {
       "source": "/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
       "destination": "/",
       "permanent": true
@@ -175,11 +170,6 @@
     },
     {
       "source": "/wp-*.php",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/cdn-cgi/l/email-protection",
       "destination": "/",
       "permanent": true
     }
