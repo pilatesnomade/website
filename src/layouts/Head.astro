@@ -26,7 +26,14 @@ const safeSeo = seo || {
   <meta name="generator" content={Astro.generator} />
 
   {safeSeo.canonical && <link rel="canonical" href={Astro.url.href + safeSeo.canonical} />}
-  {!safeSeo.canonical && <link rel="canonical" href={Astro.url.href} />}
+  {
+    !safeSeo.canonical && (
+      <link
+        rel="canonical"
+        href={Astro.url.href.endsWith("/") ? Astro.url.origin : Astro.url.href}
+      />
+    )
+  }
 
   {safeSeo.description && <meta name="description" content={safeSeo.description} />}
 
