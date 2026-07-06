@@ -46,7 +46,7 @@ if (blok.image.id) {
                 const { href, ...restAttrs } = attrs;
                 return {
                   props: {
-                    href: href + "/",
+                    href: "/" + href + "/",
                     ...restAttrs
                   }
                 };

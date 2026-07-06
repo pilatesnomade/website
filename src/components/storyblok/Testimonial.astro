@@ -15,19 +15,6 @@ const { blok } = Astro.props;
           blok.quote && (
             <RichTextRenderer
               content={blok.quote}
-              schema={{
-                marks: {
-                  link: ({ attrs }) => {
-                    const { href, ...restAttrs } = attrs;
-                    return {
-                      props: {
-                        href: href + "/",
-                        ...restAttrs
-                      }
-                    };
-                  }
-                }
-              }}
               resolver={(blok) => {
                 return {
                   component: StoryblokComponent,

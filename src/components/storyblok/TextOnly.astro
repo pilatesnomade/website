@@ -18,7 +18,7 @@ const { blok } = Astro.props;
               const { href, ...restAttrs } = attrs;
               return {
                 props: {
-                  href: href + "/",
+                  href: "/" + href + "/",
                   ...restAttrs
                 }
               };

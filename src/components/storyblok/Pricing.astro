@@ -34,19 +34,6 @@ const { blok } = Astro.props;
           <div class="description text-container-small-wide">
             <RichTextRenderer
               content={card.description}
-              schema={{
-                marks: {
-                  link: ({ attrs }) => {
-                    const { href, ...restAttrs } = attrs;
-                    return {
-                      props: {
-                        href: href + "/",
-                        ...restAttrs
-                      }
-                    };
-                  }
-                }
-              }}
               resolver={(blok) => {
                 return {
                   component: StoryblokComponent,

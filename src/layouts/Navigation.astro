@@ -18,7 +18,7 @@ const menuItems = data.story.content.items.map((item) => ({
   url:
     data.rels.find((rel) => rel.uuid === item)?.full_slug === "home"
       ? ""
-      : data.rels.find((rel) => rel.uuid === item)?.full_slug + "/"
+      : data.rels.find((rel) => rel.uuid === item)?.full_slug
 }));
 ---
 
