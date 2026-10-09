@@ -5,7 +5,7 @@
   "trailingSlash": false,
   "redirects": [
     {
-      "source": "/cdn-cgi/l/email-protection/",
+      "source": "/cdn-cgi/l/email-protection",
       "destination": "/",
       "permanent": true
     },
@@ -167,6 +167,26 @@
     {
       "source": "/cours-de-yoga-a-brive-reservez-votre-essai-gratuit",
       "destination": "/studio-pilates",
+      "permanent": true
+    },
+    {
+      "source": "/cdn-cgi/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/wp-(.*)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/(.*\\.php)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/(\\*)",
+      "destination": "/",
       "permanent": true
     }
   ]
