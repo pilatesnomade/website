@@ -24,8 +24,26 @@ function downloadImage(url: string): Promise<Buffer> {
   return new Promise((resolve, reject) => {
     https
       .get(url, (res) => {
-        if (res.statusCode === 301 || res.statusCode === 302) {
-          downloadImage(res.headers.location!).then(resolve).catch(reject);
+        const status = res.statusCode ?? 0;
+
+        if (status >= 300 && status < 400 && res.headers.location) {
+          res.resume();
+          downloadImage(new URL(res.headers.location, url).toString())
+            .then(resolve)
+            .catch(reject);
+          return;
+        }
+
+        if (status < 200 || status >= 300) {
+          res.resume();
+          reject(new Error(`HTTP ${status} for ${url}`));
+          return;
+        }
+
+        const contentType = res.headers["content-type"] ?? "";
+        if (!contentType.startsWith("image/")) {
+          res.resume();
+          reject(new Error(`Unexpected content-type "${contentType}" for ${url}`));
           return;
         }
 
@@ -49,11 +67,21 @@ async function downloadAvatars(
     reviews.map(async (review) => {
       const reviewerId = review.reviewerId as string;
       const photoUrl = review.reviewerPhotoUrl as string;
+
+      if (!reviewerId) {
+        return review;
+      }
+
       const localPath = `/cache/avatars/${reviewerId}.jpg`;
       const filePath = join(AVATARS_DIR, `${reviewerId}.jpg`);
 
       if (existsSync(filePath)) {
         return { ...review, reviewerPhotoUrl: localPath };
+      }
+
+      // Nothing to download: the review already points at a local file or has no photo.
+      if (typeof photoUrl !== "string" || !photoUrl.startsWith("http")) {
+        return review;
       }
 
       try {
@@ -63,6 +91,7 @@ async function downloadAvatars(
         return { ...review, reviewerPhotoUrl: localPath };
       } catch (error) {
         console.error(`Failed to download avatar for ${review.name}:`, error);
+        // Keep the remote URL so the component can fall back to it.
         return review;
       }
     })

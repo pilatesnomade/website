@@ -6,6 +6,20 @@ import { storyblokEditable } from "@storyblok/astro";
 const { blok } = Astro.props;
 
 const googleReviews = await fetchAndCacheGoogleReviews();
+
+// `reviewerPhotoUrl` is a downloaded file (`/cache/avatars/...`) when the build
+// managed to cache it, and the original Google URL when the download failed.
+const reviews = googleReviews.map((review) => {
+  const photo = typeof review.reviewerPhotoUrl === "string" ? review.reviewerPhotoUrl : "";
+  return {
+    ...review,
+    avatar: {
+      local: photo.startsWith("/") ? photo : undefined,
+      remote: photo.startsWith("http") ? photo : undefined,
+      initial: String(review.name ?? "").trim().charAt(0).toUpperCase()
+    }
+  };
+});
 ---
 
 <div
@@ -19,19 +33,35 @@ const googleReviews = await fetchAndCacheGoogleReviews();
     <div class="centered-slider-content">
       <ul role="tablist" class="centered-slider-bullet__list">
         {
-          googleReviews.map((review) => (
+          reviews.map((review) => (
             <li class="centered-slider-bullet__item">
               <button
                 data-centered-slider="bullet"
                 role="tab"
                 aria-selected="false"
                 class="centered-slider-bullet">
-                <Image
-                  src={`/cache/avatars/${review.reviewerId}.jpg`}
-                  alt={`Avatar de ${review.name}`}
-                  width="1920"
-                  height="1920"
-                />
+                {review.avatar.local ? (
+                  <Image
+                    src={review.avatar.local}
+                    alt={`Avatar de ${review.name ?? ""}`}
+                    width="96"
+                    height="96"
+                  />
+                ) : review.avatar.remote ? (
+                  <img
+                    src={review.avatar.remote}
+                    alt={`Avatar de ${review.name ?? ""}`}
+                    width="96"
+                    height="96"
+                    loading="lazy"
+                    decoding="async"
+                    referrerpolicy="no-referrer"
+                  />
+                ) : (
+                  <span class="avatar-initial" aria-hidden="true">
+                    {review.avatar.initial}
+                  </span>
+                )}
               </button>
             </li>
           ))
@@ -42,18 +72,35 @@ const googleReviews = await fetchAndCacheGoogleReviews();
   <div class="centered-slider-row">
     <div aria-label="slides" data-centered-slider="list" role="group" class="centered-slider-list">
       {
-        googleReviews.map((review) => (
+        reviews.map((review) => (
           <div data-centered-slider="slide" class="centered-slider-slide">
             <div class="centered-slider-slide__inner">
               <p class="slide-demo__description">{review.text}</p>
               <div class="slide-demo__details">
-                <Image
-                  src={`/cache/avatars/${review.reviewerId}.jpg`}
-                  alt={`Avatar de ${review.name}`}
-                  width="1920"
-                  height="1920"
-                  class="slide-demo__avatar"
-                />
+                {review.avatar.local ? (
+                  <Image
+                    src={review.avatar.local}
+                    alt={`Avatar de ${review.name ?? ""}`}
+                    width="96"
+                    height="96"
+                    class="slide-demo__avatar"
+                  />
+                ) : review.avatar.remote ? (
+                  <img
+                    src={review.avatar.remote}
+                    alt={`Avatar de ${review.name ?? ""}`}
+                    width="96"
+                    height="96"
+                    loading="lazy"
+                    decoding="async"
+                    referrerpolicy="no-referrer"
+                    class="slide-demo__avatar"
+                  />
+                ) : (
+                  <span class="slide-demo__avatar avatar-initial" aria-hidden="true">
+                    {review.avatar.initial}
+                  </span>
+                )}
                 <span class="slide-demo__eyebrow">{review.name}</span>
               </div>
               <div class="rating">
@@ -194,6 +241,28 @@ const googleReviews = await fetchAndCacheGoogleReviews();
     width: 2.5em;
     height: 2.5em;
     overflow: hidden;
+    object-fit: cover;
+  }
+
+  .centered-slider-bullet img,
+  .centered-slider-bullet .avatar-initial {
+    width: 100%;
+    height: 100%;
+    border-radius: 100em;
+    object-fit: cover;
+  }
+
+  .centered-slider-bullet img {
+    display: block;
+  }
+
+  .avatar-initial {
+    align-items: center;
+    justify-content: center;
+    background-color: #efeeec1a;
+    font-size: 0.75em;
+    line-height: 1;
+    display: flex;
   }
 
   .slide-demo__eyebrow {

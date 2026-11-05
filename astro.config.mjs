@@ -6,6 +6,7 @@ import vercel from '@astrojs/vercel';
 import { storyblok } from "@storyblok/astro";
 import sitemap from '@astrojs/sitemap';
 import { loadEnv } from "vite";
+import googleReviewAssets from "./src/integrations/googleReviewAssets";
 
 
 const env = loadEnv('', process.cwd(), '');
@@ -73,5 +74,5 @@ export default defineConfig({
     apiOptions: {
       region: import.meta.env.STORYBLOK_REGION || "eu"
     }
-  }),favicons(), sitemap()],
+  }),favicons(), sitemap(), googleReviewAssets()],
 });
